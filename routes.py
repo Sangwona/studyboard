@@ -1,8 +1,9 @@
 from flask import Blueprint, jsonify, request
 from database import db
 from models import User, Post, Comment
+from werkzeug.security import generate_password_hash, check_password_hash
 
-bp = Blueprint("main", __name__)
+bp = Blueprint("main_routes", __name__)
 
 # ✅ Get all posts
 @bp.route("/board/posts", methods=["GET"])
@@ -45,4 +46,4 @@ def delete_post(post_id):
 
 # Register routes in Flask
 def register_routes(app):
-    app.register_blueprint(bp)
+    app.register_blueprint(bp, url_prefix="")  # ✅ Use correct `url_prefix`
