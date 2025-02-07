@@ -1,3 +1,69 @@
+/* 네비게이션 바 스타일 */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+}
+
+.navbar-logo h1 {
+  margin: 0;
+}
+
+.navbar-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.navbar-links li {
+  margin-left: 20px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.navbar-links a:hover {
+  text-decoration: underline;
+}
+
+/* 게시글 목록 스타일 */
+.post-list {
+  margin-top: 20px;
+}
+
+.post-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.post-card:hover {
+  background-color: #f0f0f0;
+}
+
+/* 게시글 상세보기 스타일 */
+.post-detail {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: 20px;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
