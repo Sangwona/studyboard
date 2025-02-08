@@ -30,11 +30,11 @@ Users can organize discussions by topics and collaborate efficiently. Our team, 
 ### Backend
 
 - Flask (Python)
-- SQLite (built-in database for lightweight applications)
+- PostgreSQL
 
 ### Hosting
 
-- Free hosting options: **Heroku, Render**
+- Free hosting options: **Railway**
 
 ## Key Features & Use Cases
 
