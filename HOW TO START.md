@@ -59,3 +59,13 @@ git pull --rebase origin main
 git checkout sangwon # sangwon 대신 자신이 사용하고 있는 브랜치 이름을 넣어주시면 됩니다!
 git rebase main
 ```
+
+### 수정 후 push 하기
+
+```sh
+git add .
+git commit -m "update somethingsomething"
+git push origin sangwon # sangwon에는 자신의 brnach 이름.
+```
+
+그 다음 github에 들어가서 pull request 하시면 됩니다.
