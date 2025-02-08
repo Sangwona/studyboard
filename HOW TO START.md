@@ -50,3 +50,12 @@ http://localhost:5000
 ```sh
 git checkout -b [your-branch-name] # branch 이름은 여러분의 이름이나 닉네임으로 해주세요.
 ```
+
+### main 최신화 후 내 브랜치 최신화
+
+```sh
+git checkout main
+git pull --rebase origin main
+git checkout sangwon # sangwon 대신 자신이 사용하고 있는 브랜치 이름을 넣어주시면 됩니다!
+git rebase main
+```
