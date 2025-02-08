@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 from database import db, init_db
 from models import User, Post, Comment
@@ -12,6 +13,8 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
+
 # ✅ Load Configuration from config.py
 app.config.from_object("config.Config")
 
