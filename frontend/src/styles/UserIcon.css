@@ -1,0 +1,20 @@
+.user-icon {
+    display: flex;
+    width: fit-content;
+    block-size: fit-content;
+}
+
+.user-icon-image {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.user-icon-name {
+    font-size: 20px;
+    margin: 0;
+    padding-top: 3px;
+    cursor: pointer;
+}
