@@ -1,4 +1,4 @@
-// app.jsx는 라우팅 용도로 사용한다. 
+//https://studyboard-production.up.railway.app/board/posts 에서 게시글 JSON 데이터를 받아와서 UI에 표시되게 만들어라
 
 import React, { useState } from 'react';
 import './App.css';
@@ -13,7 +13,7 @@ const posts = [
 
 //
 
-function App() {
+function Home() {
   const [selectedPost, setSelectedPost] = useState(null); // 선택된 게시글 상태 관리
 
   // 게시글 클릭 시 상세보기 처리
@@ -66,4 +66,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
