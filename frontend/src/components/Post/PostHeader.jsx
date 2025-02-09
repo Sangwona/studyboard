@@ -7,8 +7,7 @@ const PostHeader = ({ title, author, date }) => {
     return (
         <div id="post-header">
             <div className='post-wrapper'>
-                {/* <h1>{title}</h1> */}
-                <h1 className='post-header-title'>This is a Cool Post about the StudyBoard</h1>
+                <h1>{title}</h1>
                 <div className='post-header-author'>
                     <UserIcon></UserIcon>
                     {/* <p>{date.year}-{date.month}-{date.day}</p> */}
