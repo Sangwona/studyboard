@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'; // Add useState and useEffect import
 import { Link } from 'react-router-dom';
 import '../../styles/Home.css';
+import NavBar from "../NavBarFooter/NavBar";
+import Footer from "../NavBarFooter/Footer";
 
 
 function Home() {
@@ -21,19 +23,8 @@ function Home() {
   }, []); // 빈 배열을 두 번째 인자로 주어 처음 한 번만 실행되도록 함    
 
   return (
-    <div className="App">
-      <header className="navbar">
-        <div className="navbar-logo">
-          <h1>Study Boards</h1>
-        </div>
-        <nav className="navbar-links">
-          <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><a href="#about">Leetcode</a></li>
-            <li><a href="#contact">Portfolio</a></li>
-          </ul>
-        </nav>
-      </header>
+    <div className="Home">
+      <NavBar />
 
       <main>
         <h2>게시글 목록</h2>
@@ -49,12 +40,9 @@ function Home() {
         </div>
       </main>
 
-      <footer>
-        <p>&copy; 2025 My Board. All rights reserved.</p>
-      </footer>
+      <Footer />
     </div>
   );
 }
-
 
 export default Home;
