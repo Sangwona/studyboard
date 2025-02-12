@@ -1,0 +1,18 @@
+.post-wrapper {
+    width: 70vw;
+    margin-top: 1vw;
+}
+
+.post-container-home {
+    margin-top: 2vw;
+    text-align: left;
+    vertical-align:middle;
+}
+
+.post-container-home-text {
+    display: inline;
+}
+
+.post-container-content {
+    margin-top: 100vw;
+}
