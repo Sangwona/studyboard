@@ -1,16 +1,10 @@
-#post-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .post-wrapper {
     width: 70vw;
-    margin-top: 5vw;
+    margin-top: 1vw;
 }
 
 .post-header-title {
-    text-align: center;
+    text-align:left;
 }
 
 .post-header-author {
