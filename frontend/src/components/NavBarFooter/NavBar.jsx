@@ -12,6 +12,8 @@ function NavBar() {
           <li><Link to="/">Home</Link></li>
           <li><a href="#about">Leetcode</a></li>
           <li><a href="#contact">Portfolio</a></li>
+          <li><Link to="/login">Login</Link></li>
+          <li><Link to="/signup">SignUp</Link></li>
         </ul>
       </nav>
     </header>
