@@ -26,6 +26,13 @@ migrate = Migrate(app, db)  # Flask-Migrate 설정 추가
 register_routes(app)
 app.register_blueprint(auth_bp, url_prefix="/auth")  # Add auth routes
 
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
+
 @app.route("/")
 def home():
     return "Hello, StudyBoard!"
