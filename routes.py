@@ -44,6 +44,41 @@ def delete_post(post_id):
     db.session.commit()
     return jsonify({"message": "Post deleted!"})
 
+# Get all comments for the post
+@bp.route("/board/posts/<int:post_id>/comments", methods=["GET"])
+def get_comments(post_id):
+    comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.created_at).all()
+
+    if not comments:
+        return jsonify({"message": "No comments found"}), 200
+
+    return jsonify([
+        {"id": c.id, 
+         "content": c.content, 
+         "user_id": c.user_id, 
+         "created_at": c.created_at.isoformat()}
+        for c in comments
+    ])
+
+# Create a new comment
+@bp.route("/board/posts/<int:post_id>/comments", methods=["POST"])
+def create_comment(post_id):
+    data = request.get_json()
+
+    # if "content" not in data or "user_id" not in data:
+    #     return jsonify({"error": "Missing conetent or user_id"}), 400
+    
+    new_comment = Comment(
+        content=data["content"], 
+        user_id=data["user_id"], 
+        post_id=post_id
+    )
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return jsonify({"message": "Comment added!", "id": new_comment.id}), 201
+
+
 # Register routes in Flask
 def register_routes(app):
     app.register_blueprint(bp, url_prefix="")  # ✅ Use correct `url_prefix`
