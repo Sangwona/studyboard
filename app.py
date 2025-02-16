@@ -13,15 +13,7 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={
-    r"/*": {
-        "origins": [
-            "http://localhost:5173",  # Local 개발용
-            "https://your-frontend-domain.com"  # 배포된 프론트엔드
-        ]
-    }
-})
-app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
 
 # ✅ Load Configuration from config.py
 app.config.from_object("config.Config")
@@ -33,6 +25,13 @@ migrate = Migrate(app, db)  # Flask-Migrate 설정 추가
 # ✅ Register Routes
 register_routes(app)
 app.register_blueprint(auth_bp, url_prefix="/auth")  # Add auth routes
+
+@app.after_request
+def after_request(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, PUT, DELETE, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
 
 @app.route("/")
 def home():
