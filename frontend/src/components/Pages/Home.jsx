@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react"; // Add useState and useEffect import
-import { Link } from "react-router-dom";
-import "../../styles/Home.css";
+import React, { useState, useEffect, navigate } from 'react'; 
+import { Link, useNavigate } from 'react-router-dom';
+import '../../styles/Home.css';
 import NavBar from "../NavBarFooter/NavBar";
 import Footer from "../NavBarFooter/Footer";
 
 function Home() {
+
+  const navigate = useNavigate()
+
   const [posts, setPosts] = useState([]); // 초기값 빈 배열
 
   useEffect(() => {
@@ -23,21 +26,24 @@ function Home() {
   return (
     <>
       <NavBar />
-      <div className="Home">
-        <main>
-          <h2>게시글 목록</h2>
-          <div className="post-list">
-            {posts.map((post) => (
-              <div key={post.id} className="post-card">
-                <Link to={`/post/${post.id}`}>
-                  <h3>{post.title}</h3>
-                  <p>{post.content}</p>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </main>
-      </div>
+
+      <main>
+        <h2>게시글 목록</h2>
+        <div className="post-list">
+          {posts.map((post) => (
+            <div key={post.id} className="post-card">
+              <Link to={`/post/${post.id}`}>
+                <h3>{post.title}</h3>
+                <p>{post.content}</p>
+              </Link>
+            </div>
+          ))}
+          <button onClick={() => navigate("/writeform")} className="write-button">
+            글쓰기
+          </button>
+        </div>
+      </main>
+
       <Footer />
     </>
   );

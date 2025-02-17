@@ -71,3 +71,19 @@
 .read-the-docs {
     color: #888;
 }
+
+.write-button {
+    display: block;
+    margin-bottom: 10px;
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.write-button:hover {
+    background-color: #0056b3;
+}
