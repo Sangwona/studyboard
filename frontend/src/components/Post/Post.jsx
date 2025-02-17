@@ -34,6 +34,7 @@ const Post = () => {
                 <Link to="/"><p className='post-container-home-text'>Back to Post List</p></Link>
             </div>
             <PostHeader title={post.title} author={post.author} date={post.date} />
+            <hr className='post-container-line'/>
             <PostContext content={post.content} />
         </div>
     );
