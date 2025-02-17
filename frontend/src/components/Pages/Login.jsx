@@ -38,7 +38,7 @@ function Login() {
       <div className="login-wrapper">
         <h2>Login</h2>
         <form method="post" id="login-form" onSubmit={handleSubmit}>
-          <input type="text" name="userName" placeholder="Email" value={userName} onChange={(e) => setUserName(e.target.value)}/>
+          <input type="text" name="userName" placeholder="Username" value={userName} onChange={(e) => setUserName(e.target.value)}/>
           <input type="password" name="userPassword" placeholder="Password" value={userPassword} onChange={(e) => setUserPassword(e.target.value)}/>
           <label htmlFor="remember-check">
             <input type="checkbox" id="remember-check" /> 아이디 저장하기
