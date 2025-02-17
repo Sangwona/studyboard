@@ -11,10 +11,8 @@ const Post = () => {
     const [post, setPost] = useState(null);
 
     useEffect(() => {
-        console.log("Post ID from URL:", post_id);
         fetch(`https://studyboard-production.up.railway.app/board/posts/${post_id}`)
             .then((response) => {
-                console.log("Response: ", response);
                 return response.json();
             })
             .then((data) => setPost(data))
