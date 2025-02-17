@@ -42,6 +42,7 @@ body {
     font-size: 16px;
     background-color: black;
     margin-top: 20px;
+    cursor: pointer;
 }
 
 #login-form>input[type="checkbox"] {
@@ -64,4 +65,30 @@ body {
     background-image: url("checkbox-active.png");
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+.popup-content {
+    width: 30vw;
+}
+
+.modal {
+    text-align: center;
+}
+
+.close-msg,
+.close-btn {
+    text-align: center;
+    font-size: 2vw;
+    margin: 1vw 0;
+}
+
+.close-btn {
+    padding: 5px 10px;
+    border-radius: 6px;
+    background-color: #b8b7b7;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    background-color: #8b8b8b;
 }
