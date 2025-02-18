@@ -1,0 +1,8 @@
+{
+  "build": {
+    "cmd": "cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt"
+  },
+  "start": {
+    "cmd": "cd backend && python app.py"
+  }
+}

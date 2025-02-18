@@ -1,8 +1,8 @@
 import "../../styles/Login.css";
 import NavBar from "../NavBarFooter/NavBar";
 import Footer from "../NavBarFooter/Footer";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import { useState } from "react";
 
 function Login() {
@@ -15,8 +15,8 @@ function Login() {
     event.preventDefault();
     console.log(userName);
     console.log(userPassword);
-    
-    const response = await fetch("https://studyboard-production.up.railway.app/auth/login", {
+
+    const response = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: userName, password: userPassword }),
@@ -38,8 +38,20 @@ function Login() {
       <div className="login-wrapper">
         <h2>Login</h2>
         <form method="post" id="login-form" onSubmit={handleSubmit}>
-          <input type="text" name="userName" placeholder="Username" value={userName} onChange={(e) => setUserName(e.target.value)}/>
-          <input type="password" name="userPassword" placeholder="Password" value={userPassword} onChange={(e) => setUserPassword(e.target.value)}/>
+          <input
+            type="text"
+            name="userName"
+            placeholder="Username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <input
+            type="password"
+            name="userPassword"
+            placeholder="Password"
+            value={userPassword}
+            onChange={(e) => setUserPassword(e.target.value)}
+          />
           <label htmlFor="remember-check">
             <input type="checkbox" id="remember-check" /> 아이디 저장하기
           </label>
@@ -47,13 +59,19 @@ function Login() {
         </form>
       </div>
 
-      <Popup className="pop-up" open={isPopupOpen} onClose={() => setIsPopupOpen(false)} modal nested>
+      <Popup
+        className="pop-up"
+        open={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        modal
+        nested
+      >
         <div className="modal">
           <div className="content">
-            {message && <p className='close-msg'>{message}</p>}
+            {message && <p className="close-msg">{message}</p>}
           </div>
           <div>
-            <button className='close-btn' onClick={() => setIsPopupOpen(false)}>
+            <button className="close-btn" onClick={() => setIsPopupOpen(false)}>
               Close
             </button>
           </div>

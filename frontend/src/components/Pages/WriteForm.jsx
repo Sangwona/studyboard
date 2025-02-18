@@ -4,20 +4,20 @@ import NavBar from "../NavBarFooter/NavBar";
 import Footer from "../NavBarFooter/Footer";
 
 const WriteForm = () => {
-  const [title, setTitle] = useState('');
-  const [detail, setDetail] = useState('');
+  const [title, setTitle] = useState("");
+  const [detail, setDetail] = useState("");
   const [posts, setPosts] = useState([]); // 기존 게시글 데이터를 관리하는 상태
 
   // 컴포넌트가 마운트될 때 게시글 데이터를 가져오는 useEffect
   useEffect(() => {
-    fetch('https://studyboard-production.up.railway.app/board/posts')
+    fetch("/board/posts")
       .then((response) => response.json())
       .then((data) => {
-        console.log('Fetched posts:', data);
+        console.log("Fetched posts:", data);
         setPosts(data);
       })
       .catch((error) => {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       });
   }, []);
 
@@ -31,7 +31,7 @@ const WriteForm = () => {
       user_id: 1, // 실제 사용자의 아이디로 대체
     };
 
-    fetch("https://studyboard-production.up.railway.app/board/posts", {
+    fetch("/board/posts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +64,7 @@ const WriteForm = () => {
 
   return (
     <>
-    <NavBar></NavBar>
+      <NavBar></NavBar>
       <form onSubmit={handleSubmit}>
         <table>
           <tbody>
