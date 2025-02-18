@@ -12,11 +12,17 @@ import os
 # ✅ Load environment variables from .env
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
-# ✅ Vite의 `dist/` 폴더 서빙하도록 변경
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 `app.py`가 있는 디렉토리
-FRONTEND_BUILD_DIR = os.path.join(BASE_DIR, "..", "frontend", "dist")
+# ✅ 프로젝트 루트 경로 가져오기
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
-app = Flask(__name__, static_folder=FRONTEND_BUILD_DIR, static_url_path="")
+# ✅ React 빌드된 정적 파일이 위치한 경로 설정
+REACT_BUILD_DIR = os.path.join(BASE_DIR, "frontend", "dist")
+
+# ✅ Flask 앱 생성 시 static 폴더 설정
+app = Flask(__name__, static_folder=REACT_BUILD_DIR, static_url_path="/")
+
+print(f"🛠️ React Build Path: {REACT_BUILD_DIR}")  # ✅ 디버깅용 출력
+print(f"🛠️ Static Folder Exists: {os.path.exists(REACT_BUILD_DIR)}")  # ✅ 존재 여부 확인
 
 
 CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
