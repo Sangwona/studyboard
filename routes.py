@@ -49,16 +49,10 @@ def delete_post(post_id):
 def get_comments(post_id):
     comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.created_at).all()
 
-    if not comments:
-        return jsonify({"message": "No comments found"}), 200
-
     return jsonify([
-        {"id": c.id, 
-         "content": c.content, 
-         "user_id": c.user_id, 
-         "created_at": c.created_at.isoformat()}
+        {"id": c.id, "content": c.content, "user_id": c.user_id, "created_at": c.created_at.isoformat()}
         for c in comments
-    ])
+    ]) if comments else jsonify([])
 
 # Create a new comment
 @bp.route("/board/posts/<int:post_id>/comments", methods=["POST"])
