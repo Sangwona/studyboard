@@ -19,7 +19,6 @@ const Post = () => {
         // Fetch post data
         fetch(`https://studyboard-production.up.railway.app/board/posts/${post_id}`)
             .then((response) => {
-                console.log("Response: ", response);
                 return response.json();
             })
             .then((data) => setPost(data))
@@ -72,6 +71,7 @@ const Post = () => {
                 <Link to="/"><p className='post-container-home-text'>Back to Post List</p></Link>
             </div>
             <PostHeader title={post.title} author={post.author} date={post.date} />
+            <hr className='post-container-line'/>
             <PostContext content={post.content} />
 
             {/* Comment Section */}

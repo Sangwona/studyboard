@@ -13,8 +13,13 @@
     align-items: center;
 }
 
-.post-header-date {
+.post-header-date,
+.post-header-min-read {
     display: inline;
     margin: 0;
     color: gray;
+}
+
+.post-header-min-read {
+    margin-left: 4px;
 }

@@ -11,6 +11,7 @@ const PostHeader = ({ title, author, date }) => {
                 <div className='post-header-author'>
                     <UserIcon></UserIcon>
                     <p className='post-header-date'>· 2025-02-06</p>
+                    <p className='post-header-min-read'>· 5 min</p>
                 </div>
             </div>
         </div>
