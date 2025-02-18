@@ -13,7 +13,11 @@ import os
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 # ✅ Vite의 `dist/` 폴더 서빙하도록 변경
-app = Flask(__name__, static_folder=os.path.join(os.getcwd(), "frontend/dist"), static_url_path="")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # 현재 `app.py`가 있는 디렉토리
+FRONTEND_BUILD_DIR = os.path.join(BASE_DIR, "..", "frontend", "dist")
+
+app = Flask(__name__, static_folder=FRONTEND_BUILD_DIR, static_url_path="")
+
 
 CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
 
@@ -37,10 +41,6 @@ def serve_react():
 @app.route("/<path:path>")
 def serve_static_files(path):
     return send_from_directory(app.static_folder, path)
-
-@app.route("/")
-def home():
-    return "Hello, StudyBoard!"
 
 if __name__ == "__main__":
     # Railway 환경인지 확인
