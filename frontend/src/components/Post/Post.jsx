@@ -13,11 +13,13 @@ const Post = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
 
+    const API_BASE_URL = "https://studyboard-production.up.railway.app";
+
     useEffect(() => {
         console.log("Post ID from URL:", post_id);
 
         // Fetch post data
-        fetch(`https://studyboard-production.up.railway.app/board/posts/${post_id}`)
+        fetch(`${API_BASE_URL}/board/posts/${post_id}`)
             .then((response) => {
                 return response.json();
             })
@@ -26,34 +28,41 @@ const Post = () => {
 
         // Fetch comments
         console.log("Fetching comments from frontend")
-        fetch(`https://studyboard-production.up.railway.app/board/posts/${post_id}/comments`)
-            .then((response) => response.json())
+        fetch(`${API_BASE_URL}/board/posts/${post_id}/comments`)
+            .then((response) => {
+                return response.json();
+            })
             .then((data) => setComments(data))
             .catch((error) => console.log("Error fetching comments:", error));
     }, [post_id]);
 
-    const handleCommentSubmit = () => {
+    const handleCommentSubmit = async () => {
         if (!newComment.trim()) return; // Prevent empty comments
 
         const userID = 1;  // ✅ Temporary fix until we get actual logged-in user
 
-        fetch(`https://studyboard-production.up.railway.app/board/posts/${post_id}/comments`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                content: newComment,
-                user_id: userID,
-            }),
-        })
-                .then((response) => {
-                    console.log("Response: ", response);
-                    return response.json();
-                })
-                .then(data => {
-                setNewComment("");  // Clear input field
-                setComments([...comments, data]);  // Update UI instantly
-            })
-            .catch(error => console.log("Error posting comment:", error));
+        try {
+            const response = await fetch(`${API_BASE_URL}/board/posts/${post_id}/comments`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    content: newComment,
+                    user_id: userID,
+                }),
+            });
+    
+            if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+    
+            setNewComment("");  // Clear input field
+    
+            // Fetch updated comments after submitting
+            const updatedResponse = await fetch(`${API_BASE_URL}/board/posts/${post_id}/comments`);
+            const updatedComments = await updatedResponse.json();
+            setComments(updatedComments);
+    
+        } catch (error) {
+            console.log("Error posting comment:", error);
+        }
     };
 
     if (!post) {
