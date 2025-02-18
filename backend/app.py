@@ -32,15 +32,13 @@ migrate = Migrate(app, db)  # Flask-Migrate 설정 추가
 register_routes(app)
 app.register_blueprint(auth_bp, url_prefix="/auth")  # Add auth routes
 
-# ✅ React 정적 파일 서빙
-@app.route("/")
-def serve_react():
-    return send_from_directory(app.static_folder, "index.html")
-
-# ✅ React 정적 파일 내부의 정적 파일 서빙 (JS, CSS, 이미지)
+# ✅ React 정적 파일 서빙 (루트 경로에서 index.html 반환)
+@app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
-def serve_static_files(path):
-    return send_from_directory(app.static_folder, path)
+def serve_react(path):
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, "index.html")
 
 if __name__ == "__main__":
     # Railway 환경인지 확인
