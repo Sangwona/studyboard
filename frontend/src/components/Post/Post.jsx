@@ -13,7 +13,8 @@ const Post = () => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState("");
 
-    const API_BASE_URL = "http://127.0.0.1:5050";
+    const API_BASE_URL = "https://studyboard-production.up.railway.app";
+    // const API_BASE_URL = "http://127.0.0.1:5050";
 
     useEffect(() => {
         console.log("Post ID from URL:", post_id);
