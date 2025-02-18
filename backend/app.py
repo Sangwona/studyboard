@@ -13,7 +13,7 @@ import os
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
 # ✅ Vite의 `dist/` 폴더 서빙하도록 변경
-app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
+app = Flask(__name__, static_folder=os.path.join(os.getcwd(), "frontend/dist"), static_url_path="")
 
 CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
 
