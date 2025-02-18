@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
 
@@ -10,9 +10,11 @@ from auth_routes import auth_bp  # ✅ Authentication routes
 import os
 
 # ✅ Load environment variables from .env
-load_dotenv()
+load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
-app = Flask(__name__)
+# ✅ Vite의 `dist/` 폴더 서빙하도록 변경
+app = Flask(__name__, static_folder="../frontend/dist", static_url_path="/")
+
 CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
 
 # ✅ Load Configuration from config.py
@@ -25,6 +27,16 @@ migrate = Migrate(app, db)  # Flask-Migrate 설정 추가
 # ✅ Register Routes
 register_routes(app)
 app.register_blueprint(auth_bp, url_prefix="/auth")  # Add auth routes
+
+# ✅ React 정적 파일 서빙
+@app.route("/")
+def serve_react():
+    return send_from_directory(app.static_folder, "index.html")
+
+# ✅ React 정적 파일 내부의 정적 파일 서빙 (JS, CSS, 이미지)
+@app.route("/<path:path>")
+def serve_static_files(path):
+    return send_from_directory(app.static_folder, path)
 
 @app.route("/")
 def home():

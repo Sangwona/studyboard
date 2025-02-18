@@ -1,18 +1,17 @@
-import React, { useState, useEffect, navigate } from 'react'; 
-import { Link, useNavigate } from 'react-router-dom';
-import '../../styles/Home.css';
+import React, { useState, useEffect, navigate } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "../../styles/Home.css";
 import NavBar from "../NavBarFooter/NavBar";
 import Footer from "../NavBarFooter/Footer";
 
 function Home() {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [posts, setPosts] = useState([]); // 초기값 빈 배열
 
   useEffect(() => {
     // API에서 데이터 받아오기
-    fetch("https://studyboard-production.up.railway.app/board/posts")
+    fetch("/board/posts")
       .then((response) => response.json()) // JSON 형태로 응답 받기
       .then((data) => {
         console.log(data);
@@ -38,7 +37,10 @@ function Home() {
               </Link>
             </div>
           ))}
-          <button onClick={() => navigate("/writeform")} className="write-button">
+          <button
+            onClick={() => navigate("/writeform")}
+            className="write-button"
+          >
             글쓰기
           </button>
         </div>

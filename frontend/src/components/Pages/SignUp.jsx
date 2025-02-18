@@ -1,11 +1,11 @@
 import "../../styles/Login.css";
 import NavBar from "../NavBarFooter/NavBar";
 import Footer from "../NavBarFooter/Footer";
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 import { useState } from "react";
 
-function SignUp () {
+function SignUp() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -15,8 +15,8 @@ function SignUp () {
     event.preventDefault();
     console.log(userName);
     console.log(password);
-    
-    const response = await fetch("https://studyboard-production.up.railway.app/auth/signup", {
+
+    const response = await fetch("/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: userName, password: password }),
@@ -37,19 +37,40 @@ function SignUp () {
       <NavBar></NavBar>
       <div className="login-wrapper">
         <h2>Sign Up</h2>
-        <form method="post" action="서버의url" id="login-form" onSubmit={handleSubmit}>
-          <input type="text" name="userName" placeholder="Username" onChange={(e)=>setUserName(e.target.value)}/>
-          <input type="password" name="userPassword" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
-          <input type="submit" value="Create Account"/>
+        <form
+          method="post"
+          action="서버의url"
+          id="login-form"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="text"
+            name="userName"
+            placeholder="Username"
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <input
+            type="password"
+            name="userPassword"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input type="submit" value="Create Account" />
         </form>
       </div>
-      <Popup className="pop-up" open={isPopupOpen} onClose={() => setIsPopupOpen(false)} modal nested>
-      <div className="modal">
+      <Popup
+        className="pop-up"
+        open={isPopupOpen}
+        onClose={() => setIsPopupOpen(false)}
+        modal
+        nested
+      >
+        <div className="modal">
           <div className="content">
-            {message && <p className='close-msg'>{message}</p>}
+            {message && <p className="close-msg">{message}</p>}
           </div>
           <div>
-            <button className='close-btn' onClick={() => setIsPopupOpen(false)}>
+            <button className="close-btn" onClick={() => setIsPopupOpen(false)}>
               Close
             </button>
           </div>
@@ -60,4 +81,4 @@ function SignUp () {
   );
 }
 
-export default SignUp
+export default SignUp;
