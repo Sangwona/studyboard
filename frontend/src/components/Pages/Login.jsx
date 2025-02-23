@@ -4,12 +4,15 @@ import Footer from "../NavBarFooter/Footer";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [loginSucceed, setLoginSucceed] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,12 +28,20 @@ function Login() {
     const data = await response.json();
     if (response.ok) {
       setMessage("Login successful!");
+      setLoginSucceed(true);
     } else {
       setMessage(data.error);
+      setLoginSucceed(false);
     }
 
     setIsPopupOpen(true);
   };
+
+  const handleClose = () => {
+    setIsPopupOpen(false);
+    if (loginSucceed)
+    navigate("/");
+  }
 
   return (
     <>
@@ -71,7 +82,7 @@ function Login() {
             {message && <p className="close-msg">{message}</p>}
           </div>
           <div>
-            <button className="close-btn" onClick={() => setIsPopupOpen(false)}>
+            <button className="close-btn" onClick={handleClose}>
               Close
             </button>
           </div>
