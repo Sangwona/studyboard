@@ -8,7 +8,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import "../../styles/Post.css";
 import Comment from "../Comment/Comment";
 
-const RAILWAY_URL = "https://studyboard-production.up.railway.app/";
+const RAILWAY_URL = "";
 
 const Post = () => {
   const { post_id } = useParams();
