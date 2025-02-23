@@ -2,10 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
+import PostInfo from "./PostInfo";
 import NavBar from "../NavBarFooter/NavBar";
 import { FaArrowLeft } from "react-icons/fa";
 import "../../styles/Post.css";
 import Comment from "../Comment/Comment";
+
+const RAILWAY_URL = "https://studyboard-production.up.railway.app/";
 
 const Post = () => {
   const { post_id } = useParams();
@@ -17,7 +20,7 @@ const Post = () => {
     console.log("Post ID from URL:", post_id);
 
     // Fetch post data
-    fetch(`/board/posts/${post_id}`)
+    fetch(`${RAILWAY_URL}/board/posts/${post_id}`)
       .then((response) => {
         return response.json();
       })
@@ -26,7 +29,7 @@ const Post = () => {
 
     // Fetch comments
     console.log("Fetching comments from frontend");
-    fetch(`/board/posts/${post_id}/comments`)
+    fetch(`${RAILWAY_URL}/board/posts/${post_id}/comments`)
       .then((response) => {
         return response.json();
       })
@@ -43,7 +46,7 @@ const Post = () => {
     const userID = 1; // ✅ Temporary fix until we get actual logged-in user
 
     try {
-      const response = await fetch(`/board/posts/${post_id}/comments`, {
+      const response = await fetch(`${RAILWAY_URL}/board/posts/${post_id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -57,7 +60,7 @@ const Post = () => {
       setNewComment(""); // Clear input field
 
       // Fetch updated comments after submitting
-      const updatedResponse = await fetch(`/board/posts/${post_id}/comments`);
+      const updatedResponse = await fetch(`${RAILWAY_URL}/board/posts/${post_id}/comments`);
       const updatedComments = await updatedResponse.json();
       setComments(updatedComments);
     } catch (error) {
@@ -84,11 +87,11 @@ const Post = () => {
         </Link>
       </div>
       <PostHeader title={post.title} author={post.author} date={post.date} />
-      <hr className="post-container-line" />
+      <PostInfo />
       <PostContext content={post.content} />
 
       {/* Comment Section */}
-      <div className="comments">
+      <div className="comments" id="comments">
         <h3>Comments</h3>
         {comments.length === 0 ? (
           <p>No comments yet. Be the first to comment!</p>
