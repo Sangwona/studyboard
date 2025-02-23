@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
+import PostInfo from "./PostInfo";
 import NavBar from "../NavBarFooter/NavBar";
 import { FaArrowLeft } from "react-icons/fa";
 import "../../styles/Post.css";
@@ -84,11 +85,11 @@ const Post = () => {
         </Link>
       </div>
       <PostHeader title={post.title} author={post.author} date={post.date} />
-      <hr className="post-container-line" />
+      <PostInfo />
       <PostContext content={post.content} />
 
       {/* Comment Section */}
-      <div className="comments">
+      <div className="comments" id="comments">
         <h3>Comments</h3>
         {comments.length === 0 ? (
           <p>No comments yet. Be the first to comment!</p>
