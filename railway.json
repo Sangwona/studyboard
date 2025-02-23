@@ -1,6 +1,6 @@
 {
   "build": {
-    "cmd": "npm --prefix frontend install && npm --prefix frontend run build && mv frontend/dist backend/static && pip install -r backend/requirements.txt"
+    "cmd": "npm --prefix frontend install && npm --prefix frontend run build && mkdir -p backend/static && mv frontend/dist/* backend/static/ && pip install -r backend/requirements.txt"
   },
   "start": {
     "cmd": "python backend/app.py"
