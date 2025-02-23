@@ -19,7 +19,7 @@ function Login() {
     console.log(userName);
     console.log(userPassword);
 
-    const response = await fetch("https://studyboard-production.up.railway.app/auth/login", {
+    const response = await fetch("/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username: userName, password: userPassword }),
