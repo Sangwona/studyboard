@@ -8,8 +8,6 @@ import { FaArrowLeft } from "react-icons/fa";
 import "../../styles/Post.css";
 import Comment from "../Comment/Comment";
 
-const RAILWAY_URL = "";
-
 const Post = () => {
   const { post_id } = useParams();
   const [post, setPost] = useState(null);
@@ -20,7 +18,7 @@ const Post = () => {
     console.log("Post ID from URL:", post_id);
 
     // Fetch post data
-    fetch(`${RAILWAY_URL}/board/posts/${post_id}`)
+    fetch(`/board/posts/${post_id}`)
       .then((response) => {
         return response.json();
       })
@@ -29,7 +27,7 @@ const Post = () => {
 
     // Fetch comments
     console.log("Fetching comments from frontend");
-    fetch(`${RAILWAY_URL}/board/posts/${post_id}/comments`)
+    fetch(`/board/posts/${post_id}/comments`)
       .then((response) => {
         return response.json();
       })
@@ -46,7 +44,7 @@ const Post = () => {
     const userID = 1; // ✅ Temporary fix until we get actual logged-in user
 
     try {
-      const response = await fetch(`${RAILWAY_URL}/board/posts/${post_id}/comments`, {
+      const response = await fetch(`/board/posts/${post_id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -60,7 +58,7 @@ const Post = () => {
       setNewComment(""); // Clear input field
 
       // Fetch updated comments after submitting
-      const updatedResponse = await fetch(`${RAILWAY_URL}/board/posts/${post_id}/comments`);
+      const updatedResponse = await fetch(`/board/posts/${post_id}/comments`);
       const updatedComments = await updatedResponse.json();
       setComments(updatedComments);
     } catch (error) {
