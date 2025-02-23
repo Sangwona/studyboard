@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/post/:post_id" element={<Post />} />
+        <Route path="/board/post/:post_id" element={<Post />} />
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<SignUp></SignUp>}></Route>
         <Route path="/writeform" element={<WriteForm />} />
