@@ -69,11 +69,6 @@ const WriteForm = () => {
         <table>
           <tbody>
             <tr>
-              <td>
-                <h2>글쓰기</h2>
-              </td>
-            </tr>
-            <tr>
               <td className="header">Title</td>
             </tr>
             <tr>
