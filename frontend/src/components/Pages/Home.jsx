@@ -61,7 +61,7 @@ function Home() {
                       <td className="title">
                         <Link to={`board/post/${post.id}`}>{post.title}</Link>
                       </td>
-                      <td className="author">{post.user_id}</td>
+                      <td className="author">{post.author}</td>
                       <td className="date">{post.date}</td> 
                     </tr>
                   ))

@@ -9,7 +9,16 @@ bp = Blueprint("main_routes", __name__)
 @bp.route("/board/posts", methods=["GET"])
 def get_posts():
     posts = Post.query.order_by(Post.created_at.desc()).all()
-    return jsonify([{"id": p.id, "title": p.title, "content": p.content, "user_id": p.user_id} for p in posts])
+    return jsonify([
+        {
+            "id": post.id,
+            "title": post.title,
+            "content": post.content,
+            "date": post.created_at.strftime("%Y-%m-%d %H:%M:%S"),  # 날짜 포맷 변경
+            "author": post.author.username  # user_id 대신 username 반환
+        }
+        for post in posts
+    ])
 
 # ✅ Get a single post by ID
 @bp.route("/board/posts/<int:post_id>", methods=["GET"])
