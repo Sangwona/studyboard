@@ -4,7 +4,7 @@ import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
 import PostInfo from "./PostInfo";
 import NavBar from "../NavBarFooter/NavBar";
-import { FaArrowLeft } from "react-icons/fa";
+import Footer from "../NavBarFooter/Footer";
 import "../../styles/Post.css";
 import Comment from "../Comment/Comment";
 
@@ -71,46 +71,63 @@ const Post = () => {
   }
 
   return (
-    <div className="post-container">
+    <>
       <NavBar />
+      <div className="post-detail-page">
+        <main className="post-detail-container">
+          {/* Post Content */}
+          <article className="post-content">
+            <PostHeader
+              title={post.title}
+            />
+            <PostContext content={post.content} />
+          </article>
 
-      {/* Post Section */}
-      <div className="post-container-home">
-        <Link to="/">
-          <FaArrowLeft />
-        </Link>
-        <p className="post-container-home-text"> </p>
-        <Link to="/">
-          <p className="post-container-home-text">Back to Post List</p>
-        </Link>
+          {/* Comment Section */}
+          <section className="comments-section" id="comments">
+            <h3 className="comments-title">Comments</h3>
+
+            {comments.length === 0 ? (
+              <p className="no-comments-message">
+                No comments yet. Be the first to comment!
+              </p>
+            ) : (
+              <div className="comments-list">
+                {comments.map((comment) => (
+                  <Comment key={comment.id} comment={comment} />
+                ))}
+              </div>
+            )}
+
+            {/* Comment Form */}
+            <form
+              className="comment-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleCommentSubmit();
+              }}
+            >
+              <input
+                type="text"
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Write a comment..."
+                className="comment-input"
+                aria-label="Comment text"
+              />
+              <button
+                type="submit"
+                className="comment-submit-button"
+                disabled={!newComment.trim()}
+              >
+                Post
+              </button>
+            </form>
+          </section>
+        </main>
       </div>
-      <PostHeader title={post.title} author={post.author} date={post.date} />
-      <PostInfo />
-      <PostContext content={post.content} />
-
-      {/* Comment Section */}
-      <div className="comments" id="comments">
-        <h3>Comments</h3>
-        {comments.length === 0 ? (
-          <p>No comments yet. Be the first to comment!</p>
-        ) : (
-          comments.map((comment) => (
-            <Comment key={comment.id} comment={comment} />
-          ))
-        )}
-
-        {/* Add a Comment Input */}
-        <div className="comment-input">
-          <input
-            type="text"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Write a comment..."
-          />
-          <button onClick={handleCommentSubmit}>Post</button>
-        </div>
-      </div>
-    </div>
+      <Footer></Footer>
+    </>
   );
 };
 

@@ -1,89 +1,125 @@
-* {
-    box-sizing: border-box;
-}
-/* 게시글 목록 스타일 */
-.post-list {
-    margin-top: 20px;
-}
-
-.post-card {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin: 10px 0;
-    cursor: pointer;
+/* Base table styling */
+table {
+    margin: 2rem auto;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 8px;
+    border-collapse: collapse;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
 }
 
-.post-card:hover {
-    background-color: #f0f0f0;
-}
-
-/* 게시글 상세보기 스타일 */
-.post-detail {
-    margin-top: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    background-color: #f9f9f9;
-}
-
-
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
+/* Header row */
+.header {
+    background-color: lightgray;
     text-align: center;
+    font-weight: bold;
 }
 
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: filter 300ms;
+.header th {
+    padding: 12px 8px;
+    font-size: 15px;
+    border-bottom: 2px solid black;
 }
 
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
+/* Table styling */
+.table td,
+.table th {
+    padding: 12px 8px;
+    font-size: 14px;
+    border-bottom: 1px solid lightgray;
 }
 
-.logo.react:hover {
-    filter: drop-shadow(0 0 2em #61dafbaa);
+/* Column width adjustments */
+.num {
+    width: 60px;
+    min-width: 40px;
 }
 
-@keyframes logo-spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+.title {
+    width: 500px;
+    min-width: 250px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-    a:nth-of-type(2) .logo {
-        animation: logo-spin infinite 20s linear;
-    }
+/* Body row styling */
+.body {
+    text-align: center;
+    transition: background-color 0.2s ease;
 }
 
-.card {
-    padding: 2em;
+.body:hover {
+    background-color: rgb(245, 248, 255);
 }
 
-.read-the-docs {
-    color: #888;
+.body .title {
+    text-align: left;
 }
 
-.write-button {
+.body .title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.body .title a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+/* Button styling with improved positioning */
+button {
     display: block;
-    margin-bottom: 10px;
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #007bff;
-    color: white;
+    width: 120px;
+    height: 40px;
+    margin: 1rem auto;
+    font-size: 15px;
+    font-weight: 500;
     border: none;
+    outline: none;
     border-radius: 5px;
+    background-color: darkgray;
+    color: black;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
 }
 
-.write-button:hover {
-    background-color: #0056b3;
+button:hover {
+    background-color: darkgray;
+    color: white;
+    transform: translateY(-2px);
+}
+
+button:active {
+    background-color: black;
+    color: white;
+    transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    table {
+        width: 95%;
+    }
+    
+    .table td,
+    .table th {
+        padding: 10px 5px;
+        font-size: 13px;
+    }
+    
+    .num {
+        width: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Hide author column on very small screens */
+    .table tr th:nth-child(3),
+    .table tr td:nth-child(3) {
+        display: none;
+    }
+    
+    .title {
+        min-width: 150px;
+    }
 }
