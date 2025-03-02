@@ -20,6 +20,7 @@ function Home() {
         return response.json();
       })
       .then((data) => {
+        console.log(data); // author와 date가 있는지 확인
         console.log("Fetched posts:", data);
         setPosts(data);
         setIsLoading(false);
@@ -60,8 +61,8 @@ function Home() {
                       <td className="title">
                         <Link to={`board/post/${post.id}`}>{post.title}</Link>
                       </td>
-                      <td className="author">{post.author}</td>
-                      <td className="date">{post.date}</td>
+                      <td className="author">{post.user_id}</td>
+                      <td className="date">{post.date}</td> 
                     </tr>
                   ))
                 ) : (

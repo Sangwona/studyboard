@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/PostContent.css'
+import '../../styles/Post.css'
 
 const PostContext = ({ content }) => {
     return (

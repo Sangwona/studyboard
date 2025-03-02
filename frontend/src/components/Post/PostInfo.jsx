@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaRegCommentDots } from "react-icons/fa";
 import { CiShare1 } from "react-icons/ci";
-import "../../styles/PostInfo.css";
+import "../../styles/Post.css";
 
 const copyUrlToClipboard = () => {
 const currentUrl = window.location.href;
