@@ -13,36 +13,47 @@
   border-bottom: 1px solid #eaeaea;
 }
 
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  color: #555;
-  text-decoration: none;
-  font-size: 15px;
-  transition: color 0.2s ease;
-}
-
-.back-link:hover {
-  color: #000;
-}
-
-.back-icon {
-  margin-right: 8px;
-  font-size: 14px;
-}
-
 /* Post content section */
 .post-content {
   margin-bottom: 40px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 25px;
+  padding: 10px 25px 25px 25px;
 }
 
 /* Post header styling */
 .post-header {
   margin-bottom: 20px;
+}
+
+#post-header {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: black;
+  margin-bottom: 1rem;
+}
+
+.home-link:hover {
+  text-decoration: underline;
+  color: #000;
+}
+
+.post-wrapper {
+  max-width: 100%;
+}
+
+.post-header-title {
+  max-width: 100%;
+  word-wrap: break-word;  /* This ensures long words will break and wrap */
+  overflow-wrap: break-word;
 }
 
 .post-title {
@@ -184,10 +195,6 @@
   transition: background-color 0.2s ease;
 }
 
-.comment-submit-button:hover {
-  background-color: #333;
-}
-
 .comment-submit-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
@@ -226,4 +233,73 @@
     border-radius: 4px;
     padding: 10px;
   }
+}
+
+.post-title-section {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
+}
+
+.post-content-section {
+  padding-top: 1rem;
+}
+
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.action-link {
+  color: black;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: none;
+  padding: 0.5rem 0.25rem;
+}
+
+/* Only add cursor: pointer to the button element */
+button.action-link {
+  cursor: pointer;
+}
+
+.action-link i {
+  font-size: 1.1rem;
+}
+
+i.fa-comment {
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+.share-button,
+.comment-button {
+  cursor: pointer;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+  background-color: transparent !important;
+}
+
+.share-button:hover,
+.comment-button:hover {
+  background-color: transparent !important;
+  color: black;
+}
+
+.comment-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border: none;
+  background: none;
+  margin-left: 0.5rem;
+}
+
+.comment-button svg {
+  display: flex;
+  align-items: center;
 }

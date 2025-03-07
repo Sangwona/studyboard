@@ -11,6 +11,11 @@
     margin: 0;
 }
 
+.navbar-logo h1 a {
+    text-decoration: none;
+    color: white;
+}
+
 .navbar-links ul {
     list-style: none;
     margin: 0;

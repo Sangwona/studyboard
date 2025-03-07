@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <header className="navbar">
       <div className="navbar-logo">
-        <h1>Study Boards</h1>
+        <h1><Link to="/">Study Boards</Link></h1>
       </div>
       <nav className="navbar-links">
         <ul>
