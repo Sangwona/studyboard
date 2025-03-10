@@ -1,12 +1,12 @@
 from flask import Flask, render_template, send_from_directory
 from flask_migrate import Migrate
 from flask_cors import CORS
-
 from database import db, init_db
 from models import User, Post, Comment
 from dotenv import load_dotenv
 from routes import register_routes  # ✅ Don't import `bp` directly
 from auth_routes import auth_bp  # ✅ Authentication routes
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import os
 
 # ✅ Load environment variables from .env
@@ -18,11 +18,13 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # ✅ React 빌드된 파일을 서빙하도록 설정
 app = Flask(__name__, static_folder="static", static_url_path="/")
 
-
 CORS(app)  # 🔥 모든 요청 허용 (배포 시 특정 도메인만 허용하도록 설정하는 것이 안전함)
 
 # ✅ Load Configuration from config.py
 app.config.from_object("config.Config")
+
+# JWT 활성화
+jwt = JWTManager(app)  
 
 # ✅ Init DB
 init_db(app)
