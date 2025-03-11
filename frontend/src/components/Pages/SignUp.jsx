@@ -1,6 +1,4 @@
 import "../../styles/Login.css";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useState } from "react";
@@ -39,13 +37,11 @@ function SignUp() {
 
   const handleClose = () => {
     setIsPopupOpen(false);
-    if (isSignUpSucceed)
-      navigate("/");
+    if (isSignUpSucceed) navigate("/");
   };
 
   return (
     <>
-      <NavBar></NavBar>
       <div className="login-wrapper">
         <h2>Sign Up</h2>
         <form
@@ -87,7 +83,6 @@ function SignUp() {
           </div>
         </div>
       </Popup>
-      <Footer></Footer>
     </>
   );
 }

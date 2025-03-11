@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/WriteForm.css";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
 
 const WriteForm = () => {
   const [title, setTitle] = useState("");
@@ -64,7 +62,6 @@ const WriteForm = () => {
 
   return (
     <>
-      <NavBar></NavBar>
       <form onSubmit={handleSubmit}>
         <table>
           <tbody>
@@ -103,7 +100,6 @@ const WriteForm = () => {
           </tbody>
         </table>
       </form>
-      <Footer></Footer>
     </>
   );
 };
