@@ -1,7 +1,9 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from database import db
 from models import User
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 
 auth_bp = Blueprint("auth_routes", __name__)  # ✅ Change to unique name
 
@@ -35,4 +37,25 @@ def login():
     if not user or not check_password_hash(user.password_hash, password):
         return jsonify({"error": "Invalid credentials"}), 401
 
-    return jsonify({"message": "Login successful!", "user_id": user.id}), 200
+    # ✅ JWT 토큰 생성 (identity에 객체 저장)
+    access_token = create_access_token(identity=json.dumps({"user_id": str(user.id), "username": user.username}))    
+
+    return jsonify({
+        "message": "Login successful!",
+        "user_id": user.id,
+        "access_token": access_token  # 프론트엔드 이 토큰을 받아서 저장해야 함.
+    }), 200
+
+# 보호된 API 엔드포인트 (로그인한 사용자만 접근 가능)
+@auth_bp.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = json.loads(get_jwt_identity())  # ✅ JSON 문자열을 다시 객체로 변환
+    user_id = current_user["user_id"]
+    username = current_user["username"]
+
+    return jsonify({
+        "message": "Access granted",
+        "user_id": user_id,
+        "username": username
+    }), 200
