@@ -5,7 +5,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import json
 
-
 bp = Blueprint("main_routes", __name__)
 
 # ✅ Get posts by pagenation
@@ -60,7 +59,7 @@ def create_post():
     content = data.get("content")
 
     new_post = Post(title=title, content=content, user_id=user_id)
-
+    
     db.session.add(new_post)
     db.session.commit()
     return jsonify({"message": "Post created!", "id": new_post.id}), 201
@@ -79,7 +78,8 @@ def update_post(post_id):
     if post.user_id != user_id:
         return jsonify({"error": "You can only edit your own posts"}), 403
 
-    data = request.get_json()
+    data = request.get_json() 
+    
     post.title = data.get("title", post.title)
     post.content = data.get("content", post.content)
     db.session.commit()
@@ -123,6 +123,7 @@ def get_comments(post_id):
 def create_comment(post_id):
     current_user = json.loads(get_jwt_identity())
     user_id = current_user["user_id"]
+
     data = request.json
     content = data.get("content")
 
