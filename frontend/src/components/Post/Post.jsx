@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
 import Comment from "../Comment/Comment";
 import "../../styles/Post.css";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
-
 
 const Post = () => {
   const { post_id } = useParams();
@@ -75,7 +72,6 @@ const Post = () => {
 
   return (
     <>
-      <NavBar />
       <div className="post-detail-page">
         <Link to="/" className="home-link">
           <IoHome /> Back to Home
@@ -84,27 +80,25 @@ const Post = () => {
           {/* Post Content */}
           <article className="post-content">
             <div className="post-title-section">
-              <PostHeader
-                title={post.title}
-              />
+              <PostHeader title={post.title} />
               <div className="post-actions">
-                <button 
+                <button
                   className="comment-button"
                   onClick={() => {
-                    document.getElementById('comments').scrollIntoView({ 
-                      behavior: 'smooth'
+                    document.getElementById("comments").scrollIntoView({
+                      behavior: "smooth",
                     });
                   }}
                 >
                   <AiOutlineComment />
-                  {comments.length>99?"99+":comments.length} Comments
+                  {comments.length > 99 ? "99+" : comments.length} Comments
                 </button>
-                <button 
+                <button
                   className="action-link share-button"
                   onClick={() => {
                     navigator.clipboard.writeText(window.location.href);
                     // Optional: Add some visual feedback
-                    alert('URL copied to clipboard!');
+                    alert("URL copied to clipboard!");
                   }}
                 >
                   <FaShare />
@@ -160,7 +154,6 @@ const Post = () => {
           </section>
         </main>
       </div>
-      <Footer></Footer>
     </>
   );
 };

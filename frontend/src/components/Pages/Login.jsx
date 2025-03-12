@@ -1,6 +1,4 @@
 import "../../styles/Login.css";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import { useState } from "react";
@@ -39,13 +37,11 @@ function Login() {
 
   const handleClose = () => {
     setIsPopupOpen(false);
-    if (loginSucceed)
-    navigate("/");
-  }
+    if (loginSucceed) navigate("/");
+  };
 
   return (
     <>
-      <NavBar></NavBar>
       <div className="login-wrapper">
         <h2>Login</h2>
         <form method="post" id="login-form" onSubmit={handleSubmit}>
@@ -88,8 +84,6 @@ function Login() {
           </div>
         </div>
       </Popup>
-
-      <Footer></Footer>
     </>
   );
 }
