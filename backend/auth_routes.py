@@ -39,12 +39,13 @@ def login():
     password = data.get("password")
 
     user = User.query.filter_by(username=username).first()
+    print("🔹 서버 현재 UTC 시간:", datetime.datetime.utcnow())
     if not user or not check_password_hash(user.password_hash, password):
         return jsonify({"error": "Invalid credentials"}), 401
 
     # ✅ JWT 토큰 생성 (identity에 객체 저장)
     access_token = create_access_token(identity=json.dumps({"user_id": str(user.id), "username": user.username}),
-                                       expires_delta=timedelta(days=1))
+                                       expires_delta=timedelta(days=2))
 
     return jsonify({
         "message": "Login successful!",

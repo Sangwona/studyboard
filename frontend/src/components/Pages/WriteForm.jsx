@@ -55,8 +55,9 @@ const WriteForm = () => {
       })
       .then((data) => {
         console.log("Post created:", data);
-        setPosts((prevPosts) => [...prevPosts, data]); // 올바른 상태 업데이트
-
+        setPosts((prevPosts) => {
+          return { ...prevPosts, posts: [...prevPosts.posts, data] };
+        });
         alert("작성 완료!");
 
         // 입력 필드 초기화
