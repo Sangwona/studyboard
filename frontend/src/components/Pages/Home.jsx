@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Home.css";
+import moment from "moment-timezone";
 
 function Home() {
   const navigate = useNavigate();
@@ -82,7 +83,13 @@ function Home() {
                         <Link to={`board/post/${post.id}`}>{post.title}</Link>
                       </td>
                       <td className="author">{post.author}</td>
-                      <td className="date">{post.date}</td>
+                      {/* 현재 타임 존에 맞춰서 DB의 시간 변경해서 보여줌 */}
+                      <td className="date">
+                        {moment
+                          .utc(post.date)
+                          .tz(moment.tz.guess())
+                          .format("YYYY-MM-DD HH:mm:ss")}
+                      </td>
                     </tr>
                   ))
                 ) : (

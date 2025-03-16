@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/WriteForm.css";
+import { useNavigate } from "react-router-dom";
 
 const WriteForm = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
   const [posts, setPosts] = useState([]); // 기존 게시글 데이터를 관리하는 상태
@@ -21,6 +23,12 @@ const WriteForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
 
     // 서버에서 요구하는 JSON 형식에 맞게 데이터 구성하기
     const newPost = {
@@ -33,6 +41,7 @@ const WriteForm = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newPost),
     })
@@ -47,12 +56,16 @@ const WriteForm = () => {
       })
       .then((data) => {
         console.log("Post created:", data);
-        // 새로 생성된 게시글을 목록에 추가
-        setPosts([...posts, data]);
+        setPosts((prevPosts) => {
+          return { ...prevPosts, posts: [...prevPosts.posts, data] };
+        });
         alert("작성 완료!");
+
         // 입력 필드 초기화
         setTitle("");
         setDetail("");
+
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error posting data:", error);
