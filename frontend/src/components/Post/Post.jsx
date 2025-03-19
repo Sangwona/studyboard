@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
@@ -14,61 +14,56 @@ const Post = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
+  // Fetch post and comments when component mounts
   useEffect(() => {
-    console.log("Post ID from URL:", post_id);
-
-    // Fetch post data
-    fetch(`/board/posts/${post_id}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => setPost(data))
-      .catch((error) => console.log("Error fetching post:", error));
-
-    // Fetch comments
-    console.log("Fetching comments from frontend");
-    fetch(`/board/posts/${post_id}/comments`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched comments: ", data);
-        setComments(data);
-      })
-      .catch((error) => console.log("Error fetching comments:", error));
+    const fetchData = async () => {
+      try {
+        const [postRes, commentsRes] = await Promise.all([
+          fetch(`/board/posts/${post_id}`).then((res) => res.json()),
+          fetch(`/board/posts/${post_id}/comments`).then((res) => res.json()),
+        ]);
+        setPost(postRes);
+        setComments(commentsRes);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
   }, [post_id]);
 
-  const handleCommentSubmit = async () => {
-    if (!newComment.trim()) return; // Prevent empty comments
+  // Handle comment submission
+  const handleCommentSubmit = useCallback(async () => {
+    // Prevent empty comments
+    if (!newComment.trim()) return;
 
-    const userID = 1; // ✅ Temporary fix until we get actual logged-in user
+    const token = localStorage.getItem("access_token");
 
+    if (!token) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
     try {
       const response = await fetch(`/board/posts/${post_id}/comments`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: newComment,
-          user_id: userID,
-        }),
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ content: newComment, user_id: 1 }), //! Replace with actual user ID
       });
 
       if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
-      setNewComment(""); // Clear input field
+      setNewComment("");
 
-      // Fetch updated comments after submitting
-      const updatedResponse = await fetch(`/board/posts/${post_id}/comments`);
-      const updatedComments = await updatedResponse.json();
+      const updatedComments = await fetch(`/board/posts/${post_id}/comments`).then((res) =>
+        res.json()
+      );
+
       setComments(updatedComments);
     } catch (error) {
-      console.log("Error posting comment:", error);
+      console.error("Error posting comment:", error);
     }
-  };
+  }, [newComment, post_id]);
 
-  if (!post) {
-    return <div>Loading...</div>;
-  }
+  if (!post) return <div>Loading...</div>;
 
   return (
     <>
@@ -116,9 +111,7 @@ const Post = () => {
             <h3 className="comments-title">Comments</h3>
 
             {comments.length === 0 ? (
-              <p className="no-comments-message">
-                No comments yet. Be the first to comment!
-              </p>
+              <p className="no-comments-message">No comments yet. Be the first to comment!</p>
             ) : (
               <div className="comments-list">
                 {comments.map((comment) => (
@@ -143,11 +136,7 @@ const Post = () => {
                 className="comment-input"
                 aria-label="Comment text"
               />
-              <button
-                type="submit"
-                className="comment-submit-button"
-                disabled={!newComment.trim()}
-              >
+              <button type="submit" className="comment-submit-button" disabled={!newComment.trim()}>
                 Post
               </button>
             </form>
