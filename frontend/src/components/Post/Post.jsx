@@ -137,7 +137,7 @@ const Post = () => {
                 aria-label="Comment text"
               />
               <button type="submit" className="comment-submit-button" disabled={!newComment.trim()}>
-                Post
+                Comment
               </button>
             </form>
           </section>
