@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Home.css";
 import moment from "moment-timezone";
@@ -19,9 +19,7 @@ function Home() {
         setIsLoading(true);
       }, 1000); // 1s 이후에만 로딩 표시
 
-      const response = await fetch(
-        `/board/posts?page=${page}&per_page=${perPage}`
-      );
+      const response = await fetch(`/board/posts?page=${page}&per_page=${perPage}`);
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -53,16 +51,11 @@ function Home() {
     <div className="home-container">
       <div className="content-area">
         {isLoading === null ? (
-          <tr>
-            {/* 아무것도 표시하지 않도록 설정하여 깜빡임 방지 */}
-            <td colSpan="4"></td>
-          </tr>
+          <div className="placeholder"></div>
         ) : isLoading ? (
           <div className="loading-indicator">게시글을 불러오는 중...</div>
         ) : error ? (
-          <div className="error-message">
-            데이터를 불러오는 중 오류가 발생했습니다: {error}
-          </div>
+          <div className="error-message">데이터를 불러오는 중 오류가 발생했습니다: {error}</div>
         ) : (
           <>
             <table className="table">
@@ -85,10 +78,7 @@ function Home() {
                       <td className="author">{post.author}</td>
                       {/* 현재 타임 존에 맞춰서 DB의 시간 변경해서 보여줌 */}
                       <td className="date">
-                        {moment
-                          .utc(post.date)
-                          .tz(moment.tz.guess())
-                          .format("YYYY-MM-DD HH:mm:ss")}
+                        {moment.utc(post.date).tz(moment.tz.guess()).format("YYYY-MM-DD HH:mm:ss")}
                       </td>
                     </tr>
                   ))
@@ -104,10 +94,7 @@ function Home() {
               <button onClick={() => handlePageChange(1)} disabled={page === 1}>
                 {"<<"}
               </button>
-              <button
-                onClick={() => handlePageChange(page - 1)}
-                disabled={page === 1}
-              >
+              <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
                 {"<"}
               </button>
               {[...Array(totalPages)].map((_, index) => {
@@ -123,26 +110,16 @@ function Home() {
                 );
               })}
 
-              <button
-                onClick={() => handlePageChange(page + 1)}
-                disabled={page === totalPages}
-              >
+              <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages}>
                 {">"}
               </button>
-              <button
-                onClick={() => handlePageChange(totalPages)}
-                disabled={page === totalPages}
-              >
-                {" "}
+              <button onClick={() => handlePageChange(totalPages)} disabled={page === totalPages}>
                 {">>"}
               </button>
             </div>
 
             <div className="button-container">
-              <button
-                className="write-button"
-                onClick={() => navigate("/writeform")}
-              >
+              <button className="write-button" onClick={() => navigate("/writeform")}>
                 글쓰기
               </button>
             </div>
