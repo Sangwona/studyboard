@@ -46,7 +46,7 @@ const Post = () => {
       const response = await fetch(`/board/posts/${post_id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ content: newComment, user_id: 1 }), //! Replace with actual user ID
+        body: JSON.stringify({ content: newComment }),
       });
 
       if (!response.ok) throw new Error(`Error: ${response.statusText}`);
