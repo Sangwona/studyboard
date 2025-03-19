@@ -14,8 +14,6 @@ function SignUp() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userName);
-    console.log(password);
 
     const response = await fetch("/auth/signup", {
       method: "POST",
@@ -44,12 +42,7 @@ function SignUp() {
     <>
       <div className="login-wrapper">
         <h2>Sign Up</h2>
-        <form
-          method="post"
-          action="서버의url"
-          id="login-form"
-          onSubmit={handleSubmit}
-        >
+        <form method="post" action="서버의url" id="login-form" onSubmit={handleSubmit}>
           <input
             type="text"
             name="userName"
@@ -73,9 +66,7 @@ function SignUp() {
         nested
       >
         <div className="modal">
-          <div className="content">
-            {message && <p className="close-msg">{message}</p>}
-          </div>
+          <div className="content">{message && <p className="close-msg">{message}</p>}</div>
           <div>
             <button className="close-btn" onClick={handleClose}>
               Close
