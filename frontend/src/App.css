@@ -1,3 +1,25 @@
 * {
   box-sizing: border-box;
 }
+/* 전체 레이아웃을 설정 */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 🔥 화면 전체 높이를 100%로 설정 */
+}
+
+/* 페이지 콘텐츠 영역 (스크롤 가능) */
+.content-container {
+  flex: 1; /* 🔥 남은 공간을 자동으로 채우도록 설정 */
+  padding: 20px;
+}
+
+/* Footer를 항상 하단에 고정 */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-top: auto; /* 🔥 자동으로 아래로 밀려 고정 */
+  width: 100%;
+}

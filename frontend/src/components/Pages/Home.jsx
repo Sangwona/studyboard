@@ -1,42 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Home.css";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
+import moment from "moment-timezone";
 
 function Home() {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(null);
   const [error, setError] = useState(null);
 
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalpages] = useState(1);
+  const perPage = 10;
+
+  const fetchPosts = async (page) => {
+    try {
+      const loadingTimeout = setTimeout(() => {
+        setIsLoading(true);
+      }, 1000); // 1s 이후에만 로딩 표시
+
+      const response = await fetch(
+        `/board/posts?page=${page}&per_page=${perPage}`
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("Fetched posts:", data);
+
+      clearTimeout(loadingTimeout); // 응답이 빠르면 로딩 표시 안 함
+
+      setPosts(data.posts); // ✅ 데이터가 있을 때만 설정
+      setTotalpages(Math.max(1, data.total_pages));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError(error.message);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    setIsLoading(true);
-    fetch("/board/posts")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data); // author와 date가 있는지 확인
-        console.log("Fetched posts:", data);
-        setPosts(data);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+    fetchPosts(page);
+  }, [page]);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
+  };
 
   return (
     <div className="home-container">
-      <NavBar />
       <div className="content-area">
-        {isLoading ? (
+        {isLoading === null ? (
+          <tr>
+            {/* 아무것도 표시하지 않도록 설정하여 깜빡임 방지 */}
+            <td colSpan="4"></td>
+          </tr>
+        ) : isLoading ? (
           <div className="loading-indicator">게시글을 불러오는 중...</div>
         ) : error ? (
           <div className="error-message">
@@ -62,7 +83,13 @@ function Home() {
                         <Link to={`board/post/${post.id}`}>{post.title}</Link>
                       </td>
                       <td className="author">{post.author}</td>
-                      <td className="date">{post.date}</td> 
+                      {/* 현재 타임 존에 맞춰서 DB의 시간 변경해서 보여줌 */}
+                      <td className="date">
+                        {moment
+                          .utc(post.date)
+                          .tz(moment.tz.guess())
+                          .format("YYYY-MM-DD HH:mm:ss")}
+                      </td>
                     </tr>
                   ))
                 ) : (
@@ -72,6 +99,44 @@ function Home() {
                 )}
               </tbody>
             </table>
+
+            <div className="pagination">
+              <button onClick={() => handlePageChange(1)} disabled={page === 1}>
+                {"<<"}
+              </button>
+              <button
+                onClick={() => handlePageChange(page - 1)}
+                disabled={page === 1}
+              >
+                {"<"}
+              </button>
+              {[...Array(totalPages)].map((_, index) => {
+                const pageNumber = index + 1;
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={page === pageNumber ? "active" : ""}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              })}
+
+              <button
+                onClick={() => handlePageChange(page + 1)}
+                disabled={page === totalPages}
+              >
+                {">"}
+              </button>
+              <button
+                onClick={() => handlePageChange(totalPages)}
+                disabled={page === totalPages}
+              >
+                {" "}
+                {">>"}
+              </button>
+            </div>
 
             <div className="button-container">
               <button
@@ -84,9 +149,7 @@ function Home() {
           </>
         )}
       </div>
-      <Footer />
     </div>
   );
 }
-
 export default Home;

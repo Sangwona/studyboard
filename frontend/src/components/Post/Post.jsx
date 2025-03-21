@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
-import PostInfo from "./PostInfo";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
-import "../../styles/Post.css";
 import Comment from "../Comment/Comment";
+import "../../styles/Post.css";
+import { AiOutlineComment } from "react-icons/ai";
+import { FaShare } from "react-icons/fa";
+import { IoHome } from "react-icons/io5";
 
 const Post = () => {
   const { post_id } = useParams();
@@ -72,15 +72,43 @@ const Post = () => {
 
   return (
     <>
-      <NavBar />
       <div className="post-detail-page">
+        <Link to="/" className="home-link">
+          <IoHome /> Back to Home
+        </Link>
         <main className="post-detail-container">
           {/* Post Content */}
           <article className="post-content">
-            <PostHeader
-              title={post.title}
-            />
-            <PostContext content={post.content} />
+            <div className="post-title-section">
+              <PostHeader title={post.title} />
+              <div className="post-actions">
+                <button
+                  className="comment-button"
+                  onClick={() => {
+                    document.getElementById("comments").scrollIntoView({
+                      behavior: "smooth",
+                    });
+                  }}
+                >
+                  <AiOutlineComment />
+                  {comments.length > 99 ? "99+" : comments.length} Comments
+                </button>
+                <button
+                  className="action-link share-button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    // Optional: Add some visual feedback
+                    alert("URL copied to clipboard!");
+                  }}
+                >
+                  <FaShare />
+                  Share
+                </button>
+              </div>
+            </div>
+            <div className="post-content-section">
+              <PostContext content={post.content} />
+            </div>
           </article>
 
           {/* Comment Section */}
@@ -126,7 +154,6 @@ const Post = () => {
           </section>
         </main>
       </div>
-      <Footer></Footer>
     </>
   );
 };

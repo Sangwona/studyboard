@@ -1,12 +1,10 @@
 import "../../styles/Login.css";
-import NavBar from "../NavBarFooter/NavBar";
-import Footer from "../NavBarFooter/Footer";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function Login({ setIsLoggedIn }) {
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -26,9 +24,14 @@ function Login() {
     });
 
     const data = await response.json();
+
     if (response.ok) {
       setMessage("Login successful!");
       setLoginSucceed(true);
+      localStorage.setItem("access_token", data.access_token);
+      console.log(setIsLoggedIn);
+
+      setIsLoggedIn(true);
     } else {
       setMessage(data.error);
       setLoginSucceed(false);
@@ -39,13 +42,11 @@ function Login() {
 
   const handleClose = () => {
     setIsPopupOpen(false);
-    if (loginSucceed)
-    navigate("/");
-  }
+    if (loginSucceed) navigate("/");
+  };
 
   return (
     <>
-      <NavBar></NavBar>
       <div className="login-wrapper">
         <h2>Login</h2>
         <form method="post" id="login-form" onSubmit={handleSubmit}>
@@ -88,8 +89,6 @@ function Login() {
           </div>
         </div>
       </Popup>
-
-      <Footer></Footer>
     </>
   );
 }

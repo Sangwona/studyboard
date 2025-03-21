@@ -1,125 +1,172 @@
 /* Base table styling */
 table {
-    margin: 2rem auto;
-    width: 90%;
-    max-width: 900px;
-    border-radius: 8px;
-    border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
+  margin: 2rem auto;
+  width: 90%;
+  max-width: 900px;
+  border-radius: 8px;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 /* Header row */
 .header {
-    background-color: lightgray;
-    text-align: center;
-    font-weight: bold;
+  background-color: lightgray;
+  text-align: center;
+  font-weight: bold;
 }
 
 .header th {
-    padding: 12px 8px;
-    font-size: 15px;
-    border-bottom: 2px solid black;
+  padding: 12px 8px;
+  font-size: 15px;
+  border-bottom: 2px solid black;
 }
 
 /* Table styling */
 .table td,
 .table th {
-    padding: 12px 8px;
-    font-size: 14px;
-    border-bottom: 1px solid lightgray;
+  padding: 12px 8px;
+  font-size: 14px;
+  border-bottom: 1px solid lightgray;
 }
 
 /* Column width adjustments */
 .num {
-    width: 60px;
-    min-width: 40px;
+  width: 60px;
+  min-width: 40px;
 }
 
 .title {
-    width: 500px;
-    min-width: 250px;
+  width: 500px;
+  min-width: 250px;
 }
 
 /* Body row styling */
 .body {
-    text-align: center;
-    transition: background-color 0.2s ease;
+  text-align: center;
+  transition: background-color 0.2s ease;
 }
 
 .body:hover {
-    background-color: rgb(245, 248, 255);
+  background-color: rgb(245, 248, 255);
 }
 
 .body .title {
-    text-align: left;
+  text-align: left;
 }
 
 .body .title a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .body .title a:hover {
-    color: black;
-    text-decoration: underline;
+  color: black;
+  text-decoration: underline;
 }
 
 /* Button styling with improved positioning */
 button {
-    display: block;
-    width: 120px;
-    height: 40px;
-    margin: 1rem auto;
-    font-size: 15px;
-    font-weight: 500;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    background-color: darkgray;
-    color: black;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
+  display: block;
+  width: 120px;
+  height: 40px;
+  margin: 1rem auto;
+  font-size: 15px;
+  font-weight: 500;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: darkgray;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 button:hover {
-    background-color: darkgray;
-    color: white;
-    transform: translateY(-2px);
+  background-color: darkgray;
+  color: white;
+  transform: translateY(-2px);
 }
 
 button:active {
-    background-color: black;
-    color: white;
-    transform: translateY(0);
+  background-color: black;
+  color: white;
+  transform: translateY(0);
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    table {
-        width: 95%;
-    }
-    
-    .table td,
-    .table th {
-        padding: 10px 5px;
-        font-size: 13px;
-    }
-    
-    .num {
-        width: 40px;
-    }
+  table {
+    width: 95%;
+  }
+
+  .table td,
+  .table th {
+    padding: 10px 5px;
+    font-size: 13px;
+  }
+
+  .num {
+    width: 40px;
+  }
 }
 
 @media (max-width: 480px) {
-    /* Hide author column on very small screens */
-    .table tr th:nth-child(3),
-    .table tr td:nth-child(3) {
-        display: none;
-    }
-    
-    .title {
-        min-width: 150px;
-    }
+  /* Hide author column on very small screens */
+  .table tr th:nth-child(3),
+  .table tr td:nth-child(3) {
+    display: none;
+  }
+
+  .title {
+    min-width: 150px;
+  }
+}
+
+.active {
+  background-color: blue;
+  color: white;
+  font-weight: bold;
+}
+
+.pagination {
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* 버튼 사이 간격 */
+  flex-wrap: nowrap; /* 버튼이 가로로 유지되도록 설정 */
+  overflow-x: auto; /* 버튼이 많아지면 가로 스크롤 가능하도록 설정 */
+  white-space: nowrap; /* 버튼 내부 텍스트 줄바꿈 방지 */
+}
+
+.pagination button {
+  background-color: #f8f9fa;
+  border: 2px solid #007bff;
+  padding: 12px 16px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border-radius: 6px;
+  min-width: 50px; /* 최소 버튼 크기 */
+  width: auto; /* 내용에 맞게 크기 조절 */
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  margin: 0;
+}
+
+.pagination button:hover {
+  color: gray;
+}
+
+.pagination button.active {
+  background-color: #0056b3;
+  color: white;
+  border: 2px solid #003d82;
 }
