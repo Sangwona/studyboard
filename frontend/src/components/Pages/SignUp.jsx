@@ -1,21 +1,77 @@
 import "../../styles/Login.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const [userName, setUserName] = useState("");
+  const [userId, setUserId] = useState("");
+  const [userNameError, setUserNameError] = useState("");
+  const [userIdError, setUserIdError] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSignUpSucceed, setIsSignUpSucceed] = useState(false);
   const navigate = useNavigate();
 
+  // Function to check if userID or username exists
+  const checkUserExists = async (field, value) => {
+    if (!value) return false;
+    try {
+      const response = await fetch("/auth/check-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: value }),
+      });
+      const data = await response.json();
+      return data.exists;
+    } catch (error) {
+      console.error("Error checking user:", error);
+      return false;
+    }
+  };
+
+  // Debounce function to limit API calls
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  // Check userID availability
+  useEffect(() => {
+    const checkUserId = debounce(async (id) => {
+      const exists = await checkUserExists("userId", id);
+      setUserIdError(exists ? "This ID is already taken" : "");
+    }, 500);
+
+    checkUserId(userId);
+  }, [userId]);
+
+  // Check username availability
+  useEffect(() => {
+    const checkUsername = debounce(async (name) => {
+      const exists = await checkUserExists("username", name);
+      setUserNameError(exists ? "This username is already taken" : "");
+    }, 500);
+
+    checkUsername(userName);
+  }, [userName]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(userName);
     console.log(password);
+
+    if (userIdError || userNameError) {
+      setMessage("Input values invalid!");
+      setIsSignUpSucceed(false);
+      setIsPopupOpen(true);
+      return;
+    }
 
     const response = await fetch("/auth/signup", {
       method: "POST",
@@ -52,10 +108,18 @@ function SignUp() {
         >
           <input
             type="text"
+            name="userId"
+            placeholder="ID"
+            onChange={(e) => setUserId(e.target.value)}
+          />
+          {userIdError && <p className="error">{userIdError}</p>}
+          <input
+            type="text"
             name="userName"
             placeholder="Username"
             onChange={(e) => setUserName(e.target.value)}
           />
+          {userNameError && <p className="error">{userNameError}</p>}
           <input
             type="password"
             name="userPassword"
