@@ -59,24 +59,10 @@ class Role(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     role_name = db.Column(db.String, nullable=False)
+    permissions = db.Column(db.JSON, default={})
 
     def __repr__(self):
         return f"<Role {self.role_name}>"
-
-#  user_roles 테이블 (Many-to-Many 관계)
-
-
-class UserRole(db.Model):
-    __tablename__ = 'user_roles'
-
-    user_id = db.Column(db.Integer, db.ForeignKey(
-        "user.id", ondelete="CASCADE"), primary_key=True)
-    role_id = db.Column(db.Integer, db.ForeignKey(
-        "roles.id", ondelete="CASCADE"), primary_key=True)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f"<UserRole user={self.user_id} role={self.role_id}>"
 
 #  groups 테이블
 
@@ -88,8 +74,6 @@ class Group(db.Model):
     group_name = db.Column(db.String, unique=True, nullable=False)
     max_members = db.Column(db.Integer, default=100)
     is_public = db.Column(db.Boolean, default=True)
-    manager_id = db.Column(db.Integer, db.ForeignKey(
-        "user.id", ondelete="SET NULL"))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.Text)
 
@@ -107,6 +91,9 @@ class GroupMember(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         "user.id", ondelete="CASCADE"), primary_key=True)
     status = db.Column(db.String)
+    role_id = db.Column(db.Integer, db.ForeignKey(
+        "roles.id", ondelete="CASCADE"), primary_key=True)
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
