@@ -14,8 +14,6 @@ function Login({ setIsLoggedIn }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userName);
-    console.log(userPassword);
 
     const response = await fetch("/auth/login", {
       method: "POST",
@@ -29,7 +27,6 @@ function Login({ setIsLoggedIn }) {
       setMessage("Login successful!");
       setLoginSucceed(true);
       localStorage.setItem("access_token", data.access_token);
-      console.log(setIsLoggedIn);
 
       setIsLoggedIn(true);
     } else {
@@ -79,9 +76,7 @@ function Login({ setIsLoggedIn }) {
         nested
       >
         <div className="modal">
-          <div className="content">
-            {message && <p className="close-msg">{message}</p>}
-          </div>
+          <div className="content">{message && <p className="close-msg">{message}</p>}</div>
           <div>
             <button className="close-btn" onClick={handleClose}>
               Close

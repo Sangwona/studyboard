@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/WriteForm.css";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,6 @@ const WriteForm = () => {
     fetch("/board/posts")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched posts:", data);
         setPosts(data);
       })
       .catch((error) => {
@@ -56,7 +55,6 @@ const WriteForm = () => {
       .then((data) => {
         console.log("Post created:", data);
         setPosts((prevPosts) => [...prevPosts, data]); // 올바른 상태 업데이트
-
         alert("작성 완료!");
 
         // 입력 필드 초기화
