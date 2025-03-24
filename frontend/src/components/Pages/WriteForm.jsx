@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/WriteForm.css";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,6 @@ const WriteForm = () => {
     fetch("/board/posts")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched posts:", data);
         setPosts(data);
       })
       .catch((error) => {
@@ -55,7 +54,6 @@ const WriteForm = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Post created:", data);
         setPosts((prevPosts) => {
           return { ...prevPosts, posts: [...prevPosts.posts, data] };
         });

@@ -110,8 +110,7 @@ def get_comments(post_id):
         post_id=post_id).order_by(Comment.created_at).all()
 
     return jsonify([
-        {"id": c.id, "content": c.content, "user_id": c.user_id,
-            "created_at": c.created_at.isoformat()}
+        {"id": c.id, "content": c.content, "user_id": c.user_id,  "username": c.commentor.username, "created_at": c.created_at.isoformat()}
         for c in comments
     ]) if comments else jsonify([])
 
