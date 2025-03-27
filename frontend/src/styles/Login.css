@@ -109,6 +109,10 @@ body {
 
 .modal {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .close-msg,
@@ -127,4 +131,10 @@ body {
 
 .close-btn:hover {
     background-color: #8b8b8b;
+}
+
+.input-group button:disabled {
+    background-color: #28a745; /* Green for valid */
+    color: white;
+    cursor: default;
 }

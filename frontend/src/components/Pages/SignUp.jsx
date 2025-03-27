@@ -8,6 +8,8 @@ function SignUp() {
   const [message, setMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSignUpSucceed, setIsSignUpSucceed] = useState(false);
+  const [duplicateID, setDuplicateID] = useState(true);
+  const [duplicateName, setDuplicateName] = useState(true);
   const navigate = useNavigate();
 
   // Function to check if userID or username exists
@@ -30,10 +32,17 @@ function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (duplicateID || duplicateName)
+    {
+      setMessage("Check duplicate before submit!");
+      setIsPopupOpen(true);
+      return;
+    }
+
     // Get form data
     const formData = new FormData(event.target);
     const userID = formData.get("userID");
-    const userName = formData.get("userName");
+    const userName = formData.get("username");
     const password = formData.get("userPassword");
 
     const response = await fetch("/auth/signup", {
@@ -60,10 +69,18 @@ function SignUp() {
     console.log(`Field: ${field} Input: ${inputString}`);
     if (inputString === "") {
       alert(`${field} shouldn't be empty!`);
+      return;
     }
     else {
       const exists = await checkUserExists(field, inputString);
       const message = (exists ? `This ${field} is already taken!` : `This ${field} is available!`);
+      if (!exists) {
+        if (field === "username")
+          setDuplicateName(false);
+        else if (field === "userID")
+          setDuplicateID(false);
+        console.log(duplicateID, duplicateName);
+      }
       alert(message);
     }
   }
@@ -88,8 +105,9 @@ function SignUp() {
               type="text"
               name="userID"
               placeholder="ID"
+              onChange={() => setDuplicateID(true)}
             />
-            <button onClick={() => checkDuplicate("userID")}>Check Duplicate</button>
+            <button type="button" onClick={() => checkDuplicate("userID")} disabled={duplicateID === false}>{duplicateID === false ?  "Valid ID" : "Check Duplicate"}</button>
           </div>
 
           <div className="input-group">
@@ -97,14 +115,14 @@ function SignUp() {
               type="text"
               name="username"
               placeholder="Username"
+              onChange={() => setDuplicateName(true)}
             />
-            <button onClick={() => checkDuplicate("username")}>Check Duplicate</button>
+            <button type="button" onClick={() => checkDuplicate("username")} disabled={duplicateName === false}>{duplicateName === false ? "Valid Username" : "Check Duplicate"}</button>
           </div>
           <input
             type="password"
             name="userPassword"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
           />
           <input type="submit" value="Create Account" />
         </form>
