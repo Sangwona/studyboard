@@ -5,11 +5,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
-  const [userName, setUserName] = useState("");
-  const [userId, setUserId] = useState("");
-  const [userNameError, setUserNameError] = useState("");
-  const [userIdError, setUserIdError] = useState("");
-  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isSignUpSucceed, setIsSignUpSucceed] = useState(false);
@@ -32,51 +27,19 @@ function SignUp() {
     }
   };
 
-  // Debounce function to limit API calls
-  const debounce = (func, delay) => {
-    let timeoutId;
-    return (...args) => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => func(...args), delay);
-    };
-  };
-
-  // Check userID availability
-  useEffect(() => {
-    const checkUserId = debounce(async (id) => {
-      const exists = await checkUserExists("userId", id);
-      setUserIdError(exists ? "This ID is already taken" : "");
-    }, 500);
-
-    checkUserId(userId);
-  }, [userId]);
-
-  // Check username availability
-  useEffect(() => {
-    const checkUsername = debounce(async (name) => {
-      const exists = await checkUserExists("username", name);
-      setUserNameError(exists ? "This username is already taken" : "");
-    }, 500);
-
-    checkUsername(userName);
-  }, [userName]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(userName);
-    console.log(password);
 
-    if (userIdError || userNameError) {
-      setMessage("Input values invalid!");
-      setIsSignUpSucceed(false);
-      setIsPopupOpen(true);
-      return;
-    }
+    // Get form data
+    const formData = new FormData(event.target);
+    const userID = formData.get("userID");
+    const userName = formData.get("userName");
+    const password = formData.get("userPassword");
 
     const response = await fetch("/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: userName, password: password }),
+      body: JSON.stringify({ userID: userID, username: userName, password: password }),
     });
 
     const data = await response.json();
@@ -90,6 +53,20 @@ function SignUp() {
 
     setIsPopupOpen(true);
   };
+
+  const checkDuplicate = async (field) => {
+    const formData = new FormData(document.getElementById("login-form"));
+    const inputString = formData.get(field);
+    console.log(`Field: ${field} Input: ${inputString}`);
+    if (inputString === "") {
+      alert(`${field} shouldn't be empty!`);
+    }
+    else {
+      const exists = await checkUserExists(field, inputString);
+      const message = (exists ? `This ${field} is already taken!` : `This ${field} is available!`);
+      alert(message);
+    }
+  }
 
   const handleClose = () => {
     setIsPopupOpen(false);
@@ -106,20 +83,23 @@ function SignUp() {
           id="login-form"
           onSubmit={handleSubmit}
         >
-          <input
-            type="text"
-            name="userId"
-            placeholder="ID"
-            onChange={(e) => setUserId(e.target.value)}
-          />
-          {userIdError && <p className="error">{userIdError}</p>}
-          <input
-            type="text"
-            name="userName"
-            placeholder="Username"
-            onChange={(e) => setUserName(e.target.value)}
-          />
-          {userNameError && <p className="error">{userNameError}</p>}
+          <div className="input-group">
+            <input
+              type="text"
+              name="userID"
+              placeholder="ID"
+            />
+            <button onClick={() => checkDuplicate("userID")}>Check Duplicate</button>
+          </div>
+
+          <div className="input-group">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+            />
+            <button onClick={() => checkDuplicate("username")}>Check Duplicate</button>
+          </div>
           <input
             type="password"
             name="userPassword"

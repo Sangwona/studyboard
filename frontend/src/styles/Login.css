@@ -11,8 +11,8 @@ body {
 }
 
 .login-wrapper {
-    width: 400px;
-    height: 350px;
+    width: 40vw;
+    min-width: 550px;
     padding: 40px;
     box-sizing: border-box;
 }
@@ -21,6 +21,10 @@ body {
     font-size: 24px;
     color: black;
     margin-bottom: 20px;
+}
+
+#login-form {
+    box-shadow: 0 0 20px 0 #00000050;
 }
 
 #login-form>input {
@@ -65,6 +69,38 @@ body {
     background-image: url("checkbox-active.png");
     background-repeat: no-repeat;
     background-size: contain;
+}
+
+/* ID Duplication Check */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    flex: 1; /* Input takes remaining space */
+    height: 48px;
+    padding: 0 10px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+
+.input-group button {
+    height: 48px;
+    padding: 0 3px;
+    border-radius: 6px;
+    background-color: #9e9e9e;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.input-group button:hover {
+    background-color: #717171;
+    transform: translateY(0px);
 }
 
 .popup-content {
