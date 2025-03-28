@@ -95,13 +95,12 @@ class GroupMember(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         "user.id", ondelete="CASCADE"), primary_key=True)
     status = db.Column(db.String)
-    role_id = db.Column(db.Integer, db.ForeignKey(
-        "roles.id", ondelete="SET NULL"))
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id", ondelete="SET NULL"), nullable=True)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # 역할과의 관계 설정
-    role = db.relationship("Role", backref="members", lazy=True)
+    role = db.relationship("Role", backref="group_members", lazy=True)
 
     def __repr__(self):
-        return f"<GroupMember group={self.group_id} user={self.user_id}>"
+        return f"<GroupMember group={self.group_id}, user={self.user_id}, role={self.role_id or 'No Role'}>"
