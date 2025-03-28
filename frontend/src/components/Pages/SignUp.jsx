@@ -135,9 +135,7 @@ function SignUp() {
         nested
       >
         <div className="modal">
-          <div className="content">
-            {message && <p className="close-msg">{message}</p>}
-          </div>
+          <div className="content">{message && <p className="close-msg">{message}</p>}</div>
           <div>
             <button className="close-btn" onClick={handleClose}>
               Close
