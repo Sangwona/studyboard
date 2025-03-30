@@ -94,18 +94,13 @@ def delete_post(post_id):
     post = Post.query.get_or_404(post_id)
     current_user = json.loads(get_jwt_identity())
     user_id = current_user["user_id"]
-    
-    print(f"Post user_id: {post.user_id}, type: {type(post.user_id)}")
-    print(f"Current user_id: {user_id}, type: {type(user_id)}")
-    
     # 작성자 검증
     if post.user_id != int(user_id):  # JWT에서 받은 user_id를 정수로 변환
         return jsonify({"error": "You can only delete your own posts"}), 403
-        
+    
     # 게시글과 관련된 댓글들을 먼저 삭제
     Comment.query.filter_by(post_id=post_id).delete()
     
-    # 게시글 삭제
     db.session.delete(post)
     db.session.commit()
     return jsonify({"message": "Post deleted!"})
