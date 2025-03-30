@@ -24,11 +24,6 @@ const WriteForm = () => {
     e.preventDefault();
     const token = localStorage.getItem("access_token");
 
-    if (!token) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
-
     // 서버에서 요구하는 JSON 형식에 맞게 데이터 구성하기
     const newPost = {
       title: title,
@@ -55,7 +50,6 @@ const WriteForm = () => {
       .then((data) => {
         console.log("Post created:", data);
         setPosts((prevPosts) => [...prevPosts, data]); // 올바른 상태 업데이트
-        alert("작성 완료!");
 
         // 입력 필드 초기화
         setTitle("");
@@ -81,7 +75,7 @@ const WriteForm = () => {
               <td>
                 <input
                   type="text"
-                  placeholder="제목을 입력하세요"
+                  placeholder="Type your title"
                   name="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
@@ -89,12 +83,12 @@ const WriteForm = () => {
               </td>
             </tr>
             <tr>
-              <td className="header">Comment</td>
+              <td className="header">Description</td>
             </tr>
             <tr>
               <td>
                 <textarea
-                  placeholder="내용을 입력하세요"
+                  placeholder="Type your description"
                   name="detail"
                   value={detail}
                   onChange={(e) => setDetail(e.target.value)}

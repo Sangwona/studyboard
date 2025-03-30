@@ -35,15 +35,25 @@ function Home() {
     if (newPage >= 1 && newPage <= totalPages) setPage(newPage);
   };
 
+  const handleWrite = () => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      alert("Please log in to write a post.");
+      navigate("/login");
+      return;
+    }
+    navigate("/writeform");
+  };
+
   return (
     <div className="home-container">
       <div className="content-area">
         {isLoading === null ? (
           <div className="placeholder"></div>
         ) : isLoading ? (
-          <div className="loading-indicator">게시글을 불러오는 중...</div>
+          <div className="loading-indicator">Loading posts...</div>
         ) : error ? (
-          <div className="error-message">데이터를 불러오는 중 오류가 발생했습니다: {error}</div>
+          <div className="error-message">Failed fetching posts: {error}</div>
         ) : (
           <>
             <PostTable posts={posts} />
@@ -71,7 +81,7 @@ function Home() {
               </button>
             </div>
             <div className="button-container">
-              <button className="write-button" onClick={() => navigate("/writeform")}>
+              <button className="write-button" onClick={handleWrite}>
                 글쓰기
               </button>
             </div>

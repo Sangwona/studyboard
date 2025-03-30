@@ -52,7 +52,6 @@ const Post = () => {
 
       if (!response.ok) throw new Error("Failed to delete post");
 
-      alert("Deleted successfully.");
       navigate("/");
     } catch (error) {
       console.error("Error deleting post:", error);
