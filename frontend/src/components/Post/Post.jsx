@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
 import Comment from "../Comment/Comment";
+import WriteForm from "../Pages/WriteForm";
 import "../../styles/Post.css";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
@@ -14,8 +15,9 @@ const Post = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [isAuthor, setIsAuthor] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
-  const userId = Number(localStorage.getItem("user_id"));
+  const userId = parseInt(localStorage.getItem("user_id"), 10);
 
   // Fetch post and comments when component mounts
   useEffect(() => {
@@ -34,6 +36,11 @@ const Post = () => {
     };
     fetchData();
   }, [post_id, userId]);
+
+  // Handle post editing
+  const handlePostEdit = () => {
+    setIsEditing(true);
+  };
 
   // Handle post deletion
   const handlePostDelete = async () => {
@@ -93,90 +100,95 @@ const Post = () => {
   if (!post) return <div>Loading...</div>;
 
   return (
-    <>
-      <div className="post-detail-page">
-        <Link to="/" className="home-link">
-          <IoHome /> Back to Home
-        </Link>
-        <main className="post-detail-container">
+    <div className="post-detail-page">
+      <Link to="/" className="home-link">
+        <IoHome /> Back to Home
+      </Link>
+      {isEditing ? (
+        <WriteForm existingPost={post} setIsEditing={setIsEditing} setPost={setPost} />
+      ) : (
+        <section className="post-content-section">
           {/* Post Content */}
-          <article className="post-content">
-            <div className="post-title-section">
-              <PostHeader post={post} />
-              <div className="post-actions">
-                <button
-                  className="comment-button"
-                  onClick={() => {
-                    document.getElementById("comments").scrollIntoView({
-                      behavior: "smooth",
-                    });
-                  }}
-                >
-                  <AiOutlineComment />
-                  {comments.length > 99 ? "99+" : comments.length} Comments
-                </button>
-                <button
-                  className="action-link share-button"
-                  onClick={() => {
-                    navigator.clipboard.writeText(window.location.href);
-                    // Optional: Add some visual feedback
-                    alert("URL copied to clipboard!");
-                  }}
-                >
-                  <FaShare />
-                  Share
-                </button>
+          <div className="post-header-wrapper">
+            <PostHeader post={post} />
+            <div className="post-actions">
+              <div
+                className="comment-button-wrapper"
+                onClick={() => {
+                  document.getElementById("comments").scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                <AiOutlineComment />
+                {comments.length > 99 ? "99+" : comments.length} Comments
+              </div>
+              <div
+                className="share-button-wrapper"
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("URL copied to clipboard!"); // Optional feedback
+                }}
+              >
+                <FaShare />
+                Share
               </div>
             </div>
-            <div className="post-content-section">
-              <PostContext content={post.content} />
-            </div>
-          </article>
-
+          </div>
+          <div className="post-content-wrapper">
+            <PostContext content={post.content} />
+          </div>
           {isAuthor && (
-            <button className="delete-button" onClick={handlePostDelete}>
-              Delete
-            </button>
-          )}
-
-          {/* Comment Section */}
-          <section className="comments-section" id="comments">
-            <h3 className="comments-title">Comments</h3>
-
-            {comments.length === 0 ? (
-              <p className="no-comments-message">No comments yet. Be the first to comment!</p>
-            ) : (
-              <div className="comments-list">
-                {comments.map((comment) => (
-                  <Comment key={comment.id} comment={comment} />
-                ))}
+            <div>
+              <div className="post-edit-delete-button-wrapper">
+                <button className="edit-button" onClick={handlePostEdit}>
+                  Edit
+                </button>
+                <button className="delete-button" onClick={handlePostDelete}>
+                  Delete
+                </button>
               </div>
-            )}
+            </div>
+          )}
+        </section>
+      )}
 
-            {/* Comment Form */}
-            <form
-              className="comment-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleCommentSubmit();
-              }}
-            >
-              <input
-                type="text"
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Write a comment..."
-                className="comment-input"
-                aria-label="Comment text"
-              />
-              <button type="submit" className="comment-submit-button" disabled={!newComment.trim()}>
-                Comment
-              </button>
-            </form>
-          </section>
-        </main>
-      </div>
-    </>
+      {/* Comment Section */}
+      <section className="comments-section" id="comments">
+        <h3 className="comments-title">Comments</h3>
+
+        {comments.length === 0 ? (
+          <p className="no-comments-message">No comments yet. Be the first to comment!</p>
+        ) : (
+          <div className="comments-list">
+            {comments.map((comment) => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+          </div>
+        )}
+
+        {/* Comment Form */}
+        <form
+          className="comment-form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleCommentSubmit();
+          }}
+        >
+          <input
+            type="text"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Write a comment..."
+            className="comment-input"
+            aria-label="Comment text"
+          />
+          <button type="submit" className="comment-submit-button" disabled={!newComment.trim()}>
+            Comment
+          </button>
+        </form>
+      </section>
+    </div>
   );
 };
 
