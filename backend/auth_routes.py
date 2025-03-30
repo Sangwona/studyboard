@@ -54,15 +54,15 @@ def login():
 
     # 보호된 API 엔드포인트 (로그인한 사용자만 접근 가능)
 
-    @auth_bp.route("/protected", methods=["GET"])
-    @jwt_required()
-    def protected():
-        current_user = json.loads(get_jwt_identity())  # ✅ JSON 문자열을 다시 객체로 변환
-        user_id = current_user["user_id"]
-        username = current_user["username"]
+@auth_bp.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = json.loads(get_jwt_identity())  # ✅ JSON 문자열을 다시 객체로 변환
+    user_id = current_user["user_id"]
+    username = current_user["username"]
 
-        return jsonify({
-            "message": "Access granted",
-            "user_id": user_id,
-            "username": username
-        }), 200
+    return jsonify({
+        "message": "Access granted",
+        "user_id": user_id,
+        "username": username
+    }), 200
