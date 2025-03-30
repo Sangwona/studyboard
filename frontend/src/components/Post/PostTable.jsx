@@ -25,7 +25,7 @@ const PostTable = ({ posts }) => {
               <td className="author">{post.author}</td>
               {/* 현재 타임 존에 맞춰서 DB의 시간 변경해서 보여줌 */}
               <td className="date">
-                {moment.utc(post.date).tz(moment.tz.guess()).format("YYYY-MM-DD HH:mm:ss")}
+                {moment.utc(post.date).tz(moment.tz.guess()).format("MM-DD-YYYY")}
               </td>
             </tr>
           ))

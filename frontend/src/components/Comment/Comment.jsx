@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
+import moment from "moment-timezone";
 
 const Comment = ({ comment }) => {
   return (
     <div className="comment">
-      <p>{comment.content}</p>
-      <small>
-        Posted by User {comment.username} on {new Date(comment.created_at).toLocaleString()}
-      </small>
+      <div className="comment-content">{comment.content}</div>
+      <div className="comment-meta">
+        <span className="comment-author">{comment.username}</span>
+        <span className="comment-date">
+          {moment.utc(comment.created_at).tz(moment.tz.guess()).format("MM-DD-YYYY, HH:mm:ss")}
+        </span>
+      </div>
     </div>
   );
 };
