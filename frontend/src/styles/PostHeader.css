@@ -15,6 +15,7 @@
 }
 
 .post-header-info-wrapper {
+  padding-top: 0.5rem;
   display: flex;
   justify-content: space-between;
   font-size: 12px;

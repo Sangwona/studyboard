@@ -66,33 +66,29 @@ table {
   text-decoration: underline;
 }
 
-/* Button styling with improved positioning */
+/* Global Button Styling */
 button {
   display: block;
+  background-color: #d3d3d3;
+  border: 1px solid;
   width: 120px;
   height: 40px;
-  margin: 1rem auto;
-  font-size: 15px;
-  font-weight: 500;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  background-color: darkgray;
-  color: black;
+  padding: 0.5rem 1rem;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 button:hover {
-  background-color: darkgray;
-  color: white;
+  background-color: white;
   transform: translateY(-2px);
 }
 
-button:active {
-  background-color: black;
-  color: white;
-  transform: translateY(0);
+button:disabled {
+  color: gray;
+  cursor: not-allowed;
 }
 
 /* Responsive adjustments */
@@ -124,12 +120,6 @@ button:active {
   }
 }
 
-.active {
-  background-color: blue;
-  color: white;
-  font-weight: bold;
-}
-
 .pagination {
   width: 100%;
   padding: 10px 0;
@@ -144,10 +134,9 @@ button:active {
 
 .pagination button {
   background-color: #f8f9fa;
-  border: 2px solid #007bff;
+  border: 1px solid;
   padding: 12px 16px;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   border-radius: 6px;
@@ -166,7 +155,11 @@ button:active {
 }
 
 .pagination button.active {
-  background-color: #0056b3;
-  color: white;
-  border: 2px solid #003d82;
+  background-color: #d3d3d3;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

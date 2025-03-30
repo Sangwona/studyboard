@@ -68,7 +68,7 @@ function Home() {
                 <button
                   key={index + 1}
                   onClick={() => handlePageChange(index + 1)}
-                  className={page === index + 1 ? "active" : ""}
+                  className={page == index + 1 ? "active" : ""}
                 >
                   {index + 1}
                 </button>
@@ -82,7 +82,7 @@ function Home() {
             </div>
             <div className="button-container">
               <button className="write-button" onClick={handleWrite}>
-                글쓰기
+                Write
               </button>
             </div>
           </>
