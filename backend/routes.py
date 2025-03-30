@@ -43,7 +43,7 @@ def get_posts():
 @bp.route("/board/posts/<int:post_id>", methods=["GET"])
 def get_post(post_id):
     post = Post.query.get_or_404(post_id)
-    return jsonify({"id": post.id, "title": post.title, "content": post.content, "user_id": post.user_id})
+    return jsonify({"id": post.id, "title": post.title, "content": post.content, "user_id": post.user_id, "date": post.created_at.strftime("%Y-%m-%d %H:%M:%S"), "author": post.author.username})
 
 # ✅ Create a new post
 
