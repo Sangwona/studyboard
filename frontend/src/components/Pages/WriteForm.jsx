@@ -1,110 +1,121 @@
 import { useState, useEffect } from "react";
 import "../../styles/WriteForm.css";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const WriteForm = () => {
+const WriteForm = ({ existingPost = null, setIsEditing, setPost }) => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [detail, setDetail] = useState("");
-  const [posts, setPosts] = useState([]); // 기존 게시글 데이터를 관리하는 상태
+  const userId = parseInt(localStorage.getItem("user_id"), 10);
+  const [formData, setFormData] = useState({
+    title: existingPost?.title || "",
+    content: existingPost?.content || "",
+    user_id: existingPost?.user_id || userId,
+  });
 
-  // 컴포넌트가 마운트될 때 게시글 데이터를 가져오는 useEffect
+  // Preload form data if editing an existing post
   useEffect(() => {
-    fetch("/board/posts")
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
+    if (existingPost) {
+      setFormData({
+        title: existingPost.title,
+        content: existingPost.content,
+        user_id: existingPost.user_id,
       });
+    }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle form submission for creating or editing a post
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("access_token");
+    const apiEndpoint = existingPost ? `/board/posts/${existingPost.id}` : "/board/posts";
+    const method = existingPost ? "PUT" : "POST";
 
-    // 서버에서 요구하는 JSON 형식에 맞게 데이터 구성하기
-    const newPost = {
-      title: title,
-      content: detail,
-      user_id: 1, // 실제 사용자의 아이디로 대체
-    };
-
-    fetch("/board/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(newPost),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          return response.text().then((text) => {
-            throw new Error(text);
-          });
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Post created:", data);
-        setPosts((prevPosts) => [...prevPosts, data]); // 올바른 상태 업데이트
-
-        // 입력 필드 초기화
-        setTitle("");
-        setDetail("");
-
-        navigate("/");
-      })
-      .catch((error) => {
-        console.error("Error posting data:", error);
-        alert("글 작성 중 오류가 발생했습니다.");
+    try {
+      const response = await fetch(apiEndpoint, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(formData),
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      if (existingPost) {
+        setPost((prev) => ({ ...prev, title: formData.title, content: formData.content }));
+        setIsEditing(false);
+        navigate(`/board/post/${existingPost.id}`);
+      } else {
+        navigate("/");
+      }
+
+      setFormData({ title: "", content: "", user_id: "" });
+    } catch (error) {
+      console.error("Error posting data:", error);
+      alert("Failed to submit the post. Please try again.");
+    }
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <table>
-          <tbody>
-            <tr>
-              <td className="header">Title</td>
-            </tr>
-            <tr>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Type your title"
-                  name="title"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td className="header">Description</td>
-            </tr>
-            <tr>
-              <td>
-                <textarea
-                  placeholder="Type your description"
-                  name="detail"
-                  value={detail}
-                  onChange={(e) => setDetail(e.target.value)}
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <input type="submit" value="등록" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
-    </>
+    <form onSubmit={handleSubmit}>
+      <table>
+        <tbody>
+          <tr>
+            <td className="header">Title</td>
+          </tr>
+          <tr>
+            <td>
+              <input
+                type="text"
+                name="title"
+                placeholder="Type your title"
+                value={formData.title}
+                onChange={handleChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td className="header">Description</td>
+          </tr>
+          <tr>
+            <td>
+              <textarea
+                name="content"
+                placeholder="Type your description"
+                value={formData.content}
+                onChange={handleChange}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <input type="submit" value={existingPost ? "Edit" : "Submit"} />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
   );
+};
+
+WriteForm.propTypes = {
+  existingPost: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    content: PropTypes.string,
+    user_id: PropTypes.number,
+  }),
+  setIsEditing: PropTypes.func,
+  setPost: PropTypes.func,
 };
 
 export default WriteForm;
