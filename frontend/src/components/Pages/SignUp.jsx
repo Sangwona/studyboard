@@ -12,10 +12,11 @@ function SignUp() {
   const [duplicateName, setDuplicateName] = useState(true);
   const navigate = useNavigate();
 
-  // Function to check if userID or username exists
+  // Function to check if email or username exists
   const checkUserExists = async (field, value) => {
     if (!value) return false;
     try {
+      // field: email, username
       const response = await fetch("/auth/check-user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -41,14 +42,14 @@ function SignUp() {
 
     // Get form data
     const formData = new FormData(event.target);
-    const userID = formData.get("userID");
-    const userName = formData.get("username");
+    const email = formData.get("email");
+    const userName = formData.get("username");s
     const password = formData.get("userPassword");
 
     const response = await fetch("/auth/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userID: userID, username: userName, password: password }),
+      body: JSON.stringify({ email: email, username: userName, password: password }),
     });
 
     const data = await response.json();
@@ -66,7 +67,6 @@ function SignUp() {
   const checkDuplicate = async (field) => {
     const formData = new FormData(document.getElementById("login-form"));
     const inputString = formData.get(field);
-    console.log(`Field: ${field} Input: ${inputString}`);
     if (inputString === "") {
       alert(`${field} shouldn't be empty!`);
       return;
@@ -77,9 +77,8 @@ function SignUp() {
       if (!exists) {
         if (field === "username")
           setDuplicateName(false);
-        else if (field === "userID")
+        else if (field === "email")
           setDuplicateID(false);
-        console.log(duplicateID, duplicateName);
       }
       alert(message);
     }
@@ -103,11 +102,11 @@ function SignUp() {
           <div className="input-group">
             <input
               type="text"
-              name="userID"
+              name="email"
               placeholder="ID"
               onChange={() => setDuplicateID(true)}
             />
-            <button type="button" onClick={() => checkDuplicate("userID")} disabled={duplicateID === false}>{duplicateID === false ?  "Valid ID" : "Check Duplicate"}</button>
+            <button type="button" onClick={() => checkDuplicate("email")} disabled={duplicateID === false}>{duplicateID === false ?  "Valid ID" : "Check Duplicate"}</button>
           </div>
 
           <div className="input-group">
