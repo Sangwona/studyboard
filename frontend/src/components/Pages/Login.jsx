@@ -26,6 +26,8 @@ function Login({ setIsLoggedIn }) {
 
     if (response.ok) {
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("user_id", data.user_id);
+      localStorage.setItem("username", data.user_name);
       setIsLoggedIn(true);
     }
   };
