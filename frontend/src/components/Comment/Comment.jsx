@@ -42,8 +42,10 @@ const Comment = ({ comment, setComments }) => {
         <div className="comment-actions-date-wrapper">
           {isCommentAuthor ? (
             <div className="comment-actions-wrapper">
-              <span>Edit</span>
-              <span onClick={handleCommentDelete}>Delete</span>
+              <span className="comment-edit-button">Edit</span>
+              <span className="comment-delete-button" onClick={handleCommentDelete}>
+                Delete
+              </span>
             </div>
           ) : (
             <div className="comment-actions-wrapper"></div>

@@ -32,7 +32,6 @@ input[type="text"] {
   height: 40px;
   border: 1.5px solid #666;
   border-radius: 5px;
-  padding: 0 12px;
   font-size: 14px;
   box-sizing: border-box;
   transition: all 0.2s ease;
