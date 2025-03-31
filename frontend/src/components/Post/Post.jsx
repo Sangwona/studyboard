@@ -162,7 +162,7 @@ const Post = () => {
         ) : (
           <div className="comments-list">
             {comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
+              <Comment key={comment.id} comment={comment} setComments={setComments} />
             ))}
           </div>
         )}
