@@ -68,10 +68,18 @@ const Comment = ({ comment, setComments }) => {
             className="comment-edit-input"
             aria-label="Edit comment"
           />
-          <button onClick={handleCommentEditSubmit} disabled={!newComment.trim()}>
-            Update
-          </button>
-          <button onClick={handleCommentEditMode}>Cancel</button>
+          <div className="comment-edit-actions-wrapper">
+            <span
+              className="comment-edit-button"
+              onClick={handleCommentEditSubmit}
+              disabled={!newComment.trim()}
+            >
+              Update
+            </span>
+            <span className="comment-delete-button" onClick={handleCommentEditMode}>
+              Cancel
+            </span>
+          </div>
         </div>
       ) : (
         <div className="comment-content">{comment.content}</div>
