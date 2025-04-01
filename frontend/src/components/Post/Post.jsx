@@ -36,20 +36,16 @@ const Post = () => {
       }
     };
     fetchData();
-  }, [post_id, userId]);
+  }, []);
 
-  // Handle post editing
+  // Toggle post edit mode
   const handlePostEdit = () => {
-    setIsEditing(true);
+    setIsEditing((prev) => !prev);
   };
 
   // Handle post deletion
-  const handlePostDelete = async () => {
+  const handlePostDeleteMode = async () => {
     const token = localStorage.getItem("access_token");
-    if (!token) {
-      alert("Please log in to delete the post.");
-      return;
-    }
 
     if (isAuthor && !window.confirm("Are you sure you want to delete the post?")) return;
     try {
@@ -145,7 +141,7 @@ const Post = () => {
                 <button className="edit-button" onClick={handlePostEdit}>
                   Edit
                 </button>
-                <button className="delete-button" onClick={handlePostDelete}>
+                <button className="delete-button" onClick={handlePostDeleteMode}>
                   Delete
                 </button>
               </div>
