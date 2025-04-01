@@ -92,6 +92,14 @@
   max-width: 100%;
 }
 
+.comment-edit-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: 25px;
+  max-width: 100%;
+}
 .comment-input {
   flex: 1;
   padding: 12px 15px;
@@ -106,6 +114,15 @@
   outline: none;
   border-color: #888;
   box-shadow: 0 0 5px rgba(136, 136, 136, 0.3);
+}
+
+.comment-edit-input {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: #f9f9f9;
 }
 
 /* Mobile-friendly adjustments */

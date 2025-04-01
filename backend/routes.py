@@ -143,6 +143,24 @@ def create_comment(post_id):
 
     return jsonify({"message": "Comment added!", "id": new_comment.id}), 201
 
+# Update a comment
+@bp.route("/board/comments/<int:comment_id>", methods=["PUT"])
+@jwt_required()
+def update_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    current_user = json.loads(get_jwt_identity())
+    user_id = current_user["user_id"]
+
+    # 작성자 검증
+    if comment.user_id != int(user_id):
+        return jsonify({"error": "You can only edit your own comments"}), 403
+
+    data = request.get_json()
+    
+    comment.content = data.get("content", comment.content)
+    db.session.commit()
+    return jsonify({"message": "Comment updated!"})
+
 # Delete a comment
 @bp.route("/board/comments/<int:comment_id>", methods=["DELETE"])
 @jwt_required()     
