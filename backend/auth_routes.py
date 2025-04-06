@@ -16,16 +16,16 @@ def check_user():
     if not data:
         return jsonify({"error": "No data provided"}), 400
 
-    user_id = data.get("userID")
+    email = data.get("email")
     username = data.get("username")
 
-    if not user_id and not username:
+    if not email and not username:
         return jsonify({"error": "No userID or username provided"}), 400
 
-    if user_id:
-        existing_user_by_id = User.query.filter_by(id=user_id).first()
-        if existing_user_by_id:
-            return jsonify({"exists": True, "field": "userID"}), 200
+    if email:
+        existing_user_by_email = User.query.filter_by(email=email).first()
+        if existing_user_by_email:
+            return jsonify({"exists": True, "field": "email"}), 200
 
     if username:
         existing_user_by_username = User.query.filter_by(username=username).first()
