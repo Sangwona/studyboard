@@ -10,6 +10,29 @@ import datetime
 
 auth_bp = Blueprint("auth_routes", __name__)  # ✅ Change to unique name
 
+@auth_bp.route("/check-user", methods=["POST"])
+def check_user():
+    data = request.json
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
+    email = data.get("email")
+    username = data.get("username")
+
+    if not email and not username:
+        return jsonify({"error": "No userID or username provided"}), 400
+
+    if email:
+        existing_user_by_email = User.query.filter_by(email=email).first()
+        if existing_user_by_email:
+            return jsonify({"exists": True, "field": "email"}), 200
+
+    if username:
+        existing_user_by_username = User.query.filter_by(username=username).first()
+        if existing_user_by_username:
+            return jsonify({"exists": True, "field": "username"}), 200
+
+    return jsonify({"exists": False}), 200
 
 @auth_bp.route("/signup", methods=["POST"])
 def signup():
