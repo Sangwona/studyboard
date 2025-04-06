@@ -103,10 +103,10 @@ function SignUp() {
             <input
               type="text"
               name="email"
-              placeholder="ID"
+              placeholder="email"
               onChange={() => setDuplicateID(true)}
             />
-            <button type="button" onClick={() => checkDuplicate("email")} disabled={duplicateID === false}>{duplicateID === false ?  "Valid ID" : "Check Duplicate"}</button>
+            <button type="button" onClick={() => checkDuplicate("email")} disabled={duplicateID === false}>{duplicateID === false ?  "Valid Email" : "Check Duplicate"}</button>
           </div>
 
           <div className="input-group">
