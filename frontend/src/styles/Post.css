@@ -2,24 +2,22 @@
 .post-detail-page {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 /* Navigation section */
 .post-navigation {
   margin: 20px 0;
-  padding-bottom: 15px;
+  padding-bottom: 1rem;
   border-bottom: 1px solid #eaeaea;
 }
 
 /* Post content section */
-.post-content {
-  margin-bottom: 40px;
-  background-color: #fff;
+.post-content-section {
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 10px 25px 25px 25px;
+  padding: 1rem;
 }
 
 .home-link {
@@ -64,40 +62,51 @@
   color: #999;
 }
 
-/* Post context - the main content */
-.post-context {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333;
+.post-header-wrapper {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 1rem;
 }
 
-.post-context p {
-  margin-bottom: 1em;
+.post-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.post-context img {
-  max-width: 100%;
-  height: auto;
-  margin: 20px 0;
-  border-radius: 4px;
+.post-content-wrapper {
+  padding-bottom: 2rem;
 }
 
-.post-context a {
-  color: #555;
-  text-decoration: underline;
-  text-decoration-color: #ddd;
-  transition: all 0.2s ease;
+.post-edit-delete-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 1rem 0rem 0rem 1rem;
+  border-top: 1px solid #eaeaea;
 }
 
-.post-context a:hover {
-  color: #000;
-  text-decoration-color: #999;
+.edit-button,
+.delete-button {
+  /* margin: 0 auto; 이게 디폴트인데, 이 경우 양 옆 마진을 최대한 써서 아이템을 정렬시켜 justify-content: flex-end 등이 안 먹힘. auto를 꼭 빼야 한다. */
+  margin: 0;
+}
+
+.action-link {
+  color: black;
+  display: flex;
+  text-decoration: none;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: none;
 }
 
 /* Comments section */
 .comments-section {
   margin-top: 30px;
-  padding-top: 20px;
+  padding-top: 1rem;
   border-top: 1px solid #eaeaea;
 }
 
@@ -120,7 +129,7 @@
 
 /* Individual comment styling */
 .comment {
-  padding: 10px;
+  padding: 0.5rem;
   margin-bottom: 15px;
   background-color: #f9f9f9;
   border-radius: 6px;
@@ -177,27 +186,6 @@
   box-shadow: 0 0 5px rgba(136, 136, 136, 0.3);
 }
 
-.comment-submit-button {
-  padding: 12px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.comment-submit-button:hover {
-  background-color: #0056b3;
-}
-
-.comment-submit-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
 /* Mobile-friendly adjustments */
 @media (max-width: 480px) {
   .comment-form {
@@ -219,11 +207,11 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .post-detail-page {
-    padding: 15px;
+    padding: 1rem;
   }
 
   .post-content {
-    padding: 20px;
+    padding: 1rem;
   }
 
   .post-title {
@@ -233,7 +221,8 @@
 
 @media (max-width: 480px) {
   .post-content {
-    padding: 15px;
+    max-width: 100%;
+    padding: 1rem;
   }
 
   .comment-form {
@@ -247,44 +236,13 @@
 
   .comment-submit-button {
     border-radius: 4px;
-    padding: 10px;
+    padding: 0.5rem;
   }
-}
-
-.post-title-section {
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #e0e0e0;
-  padding-bottom: 1rem;
-}
-
-.post-content-section {
-  padding-top: 1rem;
-}
-
-.post-actions {
-  display: flex;
-  gap: 1rem;
-  margin-top: 0.25rem;
-}
-
-.action-link {
-  color: black;
-  display: flex;
-  text-decoration: none;
-  align-items: center;
-  gap: 0.5rem;
-  border: none;
-  background: none;
-  padding: 0.5rem 0.25rem;
-}
-
-/* Only add cursor: pointer to the button element */
-button.action-link {
-  cursor: pointer;
 }
 
 .action-link i {
   font-size: 1.1rem;
+  cursor: pointer;
 }
 
 i.fa-comment {
@@ -294,19 +252,15 @@ i.fa-comment {
 
 .share-button,
 .comment-button {
+  width: unset;
   cursor: pointer;
-  margin: 0;
+  /* margin: 0; */
   -webkit-tap-highlight-color: transparent;
   background-color: transparent !important;
 }
 
-.share-button:hover,
-.comment-button:hover {
-  background-color: transparent !important;
-  color: black;
-}
-
-.comment-button {
+.share-button-wrapper,
+.comment-button-wrapper {
   display: flex;
   align-items: center;
   gap: 0.25rem;

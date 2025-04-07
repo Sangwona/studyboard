@@ -7,6 +7,9 @@ function NavBar({ isLoggedIn, setIsLoggedIn }) {
   //로그아웃시 토큰 삭제
   const handleLogout = () => {
     localStorage.removeItem("access_token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("username");
+
     setIsLoggedIn(false);
     navigate("/");
   };

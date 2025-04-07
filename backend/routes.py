@@ -75,7 +75,7 @@ def update_post(post_id):
     user_id = current_user["user_id"]
 
     # 작성자 검증
-    if post.user_id != user_id:
+    if post.user_id != int(user_id):
         return jsonify({"error": "You can only edit your own posts"}), 403
 
     data = request.get_json() 
