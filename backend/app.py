@@ -38,7 +38,8 @@ app.register_blueprint(auth_bp, url_prefix="/auth")  # Add auth routes
 
 
 @app.route("/")
-def serve_react():
+@app.route("/board/post/<path:path>")  # Catch all paths under /board/post
+def serve_react(path=""):
     return send_from_directory(app.static_folder, "index.html")
 
 
