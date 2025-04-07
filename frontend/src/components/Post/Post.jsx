@@ -5,6 +5,7 @@ import PostContext from "./PostContent";
 import Comment from "../Comment/Comment";
 import WriteForm from "../Pages/WriteForm";
 import "../../styles/Post.css";
+import "../../styles/Comment.css";
 import { AiOutlineComment } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
@@ -162,7 +163,7 @@ const Post = () => {
         ) : (
           <div className="comments-list">
             {comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} />
+              <Comment key={comment.id} comment={comment} setComments={setComments} />
             ))}
           </div>
         )}
