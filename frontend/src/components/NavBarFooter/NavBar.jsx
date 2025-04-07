@@ -1,14 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/NavBar.css"; // 네비게이션 스타일
-import { useEffect, useState } from "react";
 
 function NavBar({ isLoggedIn, setIsLoggedIn }) {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("access_token");
-    setIsLoggedIn(!!token); // ✅ 토큰이 있으면 true, 없으면 false
-  }, []);
 
   //로그아웃시 토큰 삭제
   const handleLogout = () => {

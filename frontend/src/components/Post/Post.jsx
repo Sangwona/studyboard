@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import PostHeader from "./PostHeader";
 import PostContext from "./PostContent";
 import Comment from "../Comment/Comment";
@@ -13,6 +13,9 @@ const Post = () => {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [isAuthor, setIsAuthor] = useState(false);
+  const navigate = useNavigate();
+  const userId = Number(localStorage.getItem("user_id"));
 
   // Fetch post and comments when component mounts
   useEffect(() => {
@@ -24,12 +27,37 @@ const Post = () => {
         ]);
         setPost(postRes);
         setComments(commentsRes);
+        setIsAuthor(postRes.user_id == userId);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, [post_id]);
+  }, [post_id, userId]);
+
+  // Handle post deletion
+  const handlePostDelete = async () => {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      alert("Please log in to delete the post.");
+      return;
+    }
+
+    if (isAuthor && !window.confirm("Are you sure you want to delete the post?")) return;
+    try {
+      const response = await fetch(`/board/posts/${post_id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) throw new Error("Failed to delete post");
+
+      alert("Deleted successfully.");
+      navigate("/");
+    } catch (error) {
+      console.error("Error deleting post:", error);
+    }
+  };
 
   // Handle comment submission
   const handleCommentSubmit = useCallback(async () => {
@@ -39,7 +67,7 @@ const Post = () => {
     const token = localStorage.getItem("access_token");
 
     if (!token) {
-      alert("로그인이 필요합니다.");
+      alert("Please log in to comment.");
       return;
     }
     try {
@@ -75,7 +103,7 @@ const Post = () => {
           {/* Post Content */}
           <article className="post-content">
             <div className="post-title-section">
-              <PostHeader title={post.title} />
+              <PostHeader post={post} />
               <div className="post-actions">
                 <button
                   className="comment-button"
@@ -105,6 +133,12 @@ const Post = () => {
               <PostContext content={post.content} />
             </div>
           </article>
+
+          {isAuthor && (
+            <button className="delete-button" onClick={handlePostDelete}>
+              Delete
+            </button>
+          )}
 
           {/* Comment Section */}
           <section className="comments-section" id="comments">
