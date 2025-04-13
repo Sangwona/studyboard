@@ -2,34 +2,22 @@
 .post-detail-page {
   max-width: 900px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 /* Navigation section */
 .post-navigation {
   margin: 20px 0;
-  padding-bottom: 15px;
+  padding-bottom: 1rem;
   border-bottom: 1px solid #eaeaea;
 }
 
 /* Post content section */
-.post-content {
-  margin-bottom: 40px;
-  background-color: #fff;
+.post-content-section {
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  padding: 10px 25px 25px 25px;
-}
-
-/* Post header styling */
-.post-header {
-  margin-bottom: 20px;
-}
-
-#post-header {
-  max-width: 100%;
-  overflow: hidden;
+  padding: 1rem;
 }
 
 .home-link {
@@ -44,10 +32,6 @@
 .home-link:hover {
   text-decoration: underline;
   color: #000;
-}
-
-.post-wrapper {
-  max-width: 100%;
 }
 
 .post-header-title {
@@ -78,204 +62,35 @@
   color: #999;
 }
 
-/* Post context - the main content */
-.post-context {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #333;
-}
-
-.post-context p {
-  margin-bottom: 1em;
-}
-
-.post-context img {
-  max-width: 100%;
-  height: auto;
-  margin: 20px 0;
-  border-radius: 4px;
-}
-
-.post-context a {
-  color: #555;
-  text-decoration: underline;
-  text-decoration-color: #ddd;
-  transition: all 0.2s ease;
-}
-
-.post-context a:hover {
-  color: #000;
-  text-decoration-color: #999;
-}
-
-/* Comments section */
-.comments-section {
-  margin-top: 30px;
-  padding-top: 20px;
-  border-top: 1px solid #eaeaea;
-}
-
-.comments-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.no-comments-message {
-  color: #999;
-  font-style: italic;
-  margin-bottom: 25px;
-}
-
-.comments-list {
-  margin-bottom: 30px;
-}
-
-/* Individual comment styling */
-.comment {
-  padding: 15px;
-  margin-bottom: 15px;
-  background-color: #f9f9f9;
-  border-radius: 6px;
-  border-left: 3px solid #ddd;
-}
-
-.comment-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.comment-author {
-  font-weight: 600;
-  color: #444;
-}
-
-.comment-date {
-  font-size: 12px;
-  color: #999;
-}
-
-.comment-text {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #555;
-}
-
-/* Comment form styling */
-.comment-form {
-  display: flex;
-  align-items: center; /* Ensures vertical alignment */
-  gap: 8px; /* Adds space between input and button */
-  margin-top: 25px;
-  max-width: 100%;
-}
-
-.comment-input {
-  flex: 1;
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  background-color: #f9f9f9;
-}
-
-.comment-input:focus {
-  outline: none;
-  border-color: #888;
-  box-shadow: 0 0 5px rgba(136, 136, 136, 0.3);
-}
-
-.comment-submit-button {
-  padding: 12px 20px;
-  border: none;
-  background-color: #007bff;
-  color: white;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.comment-submit-button:hover {
-  background-color: #0056b3;
-}
-
-.comment-submit-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-/* Mobile-friendly adjustments */
-@media (max-width: 480px) {
-  .comment-form {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .comment-input {
-    width: 100%;
-    border-radius: 8px;
-  }
-
-  .comment-submit-button {
-    width: 100%;
-    border-radius: 8px;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .post-detail-page {
-    padding: 15px;
-  }
-
-  .post-content {
-    padding: 20px;
-  }
-
-  .post-title {
-    font-size: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .post-content {
-    padding: 15px;
-  }
-
-  .comment-form {
-    flex-direction: column;
-  }
-
-  .comment-input {
-    border-radius: 4px;
-    margin-bottom: 10px;
-  }
-
-  .comment-submit-button {
-    border-radius: 4px;
-    padding: 10px;
-  }
-}
-
-.post-title-section {
+.post-header-wrapper {
   margin-bottom: 2rem;
   border-bottom: 1px solid #e0e0e0;
   padding-bottom: 1rem;
 }
 
-.post-content-section {
-  padding-top: 1rem;
-}
-
 .post-actions {
   display: flex;
+  justify-content: flex-end;
   gap: 1rem;
-  margin-top: 0.25rem;
+  margin-top: 1rem;
+}
+
+.post-content-wrapper {
+  padding-bottom: 2rem;
+}
+
+.post-edit-delete-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 1rem 0rem 0rem 1rem;
+  border-top: 1px solid #eaeaea;
+}
+
+.edit-button,
+.delete-button {
+  /* margin: 0 auto; 이게 디폴트인데, 이 경우 양 옆 마진을 최대한 써서 아이템을 정렬시켜 justify-content: flex-end 등이 안 먹힘. auto를 꼭 빼야 한다. */
+  margin: 0;
 }
 
 .action-link {
@@ -286,47 +101,26 @@
   gap: 0.5rem;
   border: none;
   background: none;
-  padding: 0.5rem 0.25rem;
 }
 
-/* Only add cursor: pointer to the button element */
-button.action-link {
-  cursor: pointer;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .post-detail-page {
+    padding: 1rem;
+  }
+
+  .post-content {
+    padding: 1rem;
+  }
+
+  .post-title {
+    font-size: 20px;
+  }
 }
 
-.action-link i {
-  font-size: 1.1rem;
-}
-
-i.fa-comment {
-  font-size: 1.2rem;
-  vertical-align: middle;
-}
-
-.share-button,
-.comment-button {
-  cursor: pointer;
-  margin: 0;
-  -webkit-tap-highlight-color: transparent;
-  background-color: transparent !important;
-}
-
-.share-button:hover,
-.comment-button:hover {
-  background-color: transparent !important;
-  color: black;
-}
-
-.comment-button {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  border: none;
-  background: none;
-  margin-left: 0.5rem;
-}
-
-.comment-button svg {
-  display: flex;
-  align-items: center;
+@media (max-width: 480px) {
+  .post-content {
+    max-width: 100%;
+    padding: 1rem;
+  }
 }

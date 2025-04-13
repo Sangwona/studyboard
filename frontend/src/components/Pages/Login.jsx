@@ -1,7 +1,7 @@
 import "../../styles/Login.css";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login({ setIsLoggedIn }) {
@@ -9,7 +9,6 @@ function Login({ setIsLoggedIn }) {
   const [userPassword, setUserPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [loginSucceed, setLoginSucceed] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -22,24 +21,20 @@ function Login({ setIsLoggedIn }) {
     });
 
     const data = await response.json();
+    setMessage(response.ok ? "Login successful!" : data.error);
+    setIsPopupOpen(true);
 
     if (response.ok) {
-      setMessage("Login successful!");
-      setLoginSucceed(true);
       localStorage.setItem("access_token", data.access_token);
-
+      localStorage.setItem("user_id", data.user_id);
+      localStorage.setItem("username", data.user_name);
       setIsLoggedIn(true);
-    } else {
-      setMessage(data.error);
-      setLoginSucceed(false);
     }
-
-    setIsPopupOpen(true);
   };
 
   const handleClose = () => {
     setIsPopupOpen(false);
-    if (loginSucceed) navigate("/");
+    if (localStorage.getItem("access_token")) navigate("/");
   };
 
   return (
@@ -68,13 +63,7 @@ function Login({ setIsLoggedIn }) {
         </form>
       </div>
 
-      <Popup
-        className="pop-up"
-        open={isPopupOpen}
-        onClose={() => setIsPopupOpen(false)}
-        modal
-        nested
-      >
+      <Popup className="pop-up" open={isPopupOpen} onClose={handleClose} modal nested>
         <div className="modal">
           <div className="content">{message && <p className="close-msg">{message}</p>}</div>
           <div>

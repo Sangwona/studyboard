@@ -43,7 +43,7 @@ def get_posts():
 @bp.route("/board/posts/<int:post_id>", methods=["GET"])
 def get_post(post_id):
     post = Post.query.get_or_404(post_id)
-    return jsonify({"id": post.id, "title": post.title, "content": post.content, "user_id": post.user_id})
+    return jsonify({"id": post.id, "title": post.title, "content": post.content, "user_id": post.user_id, "date": post.created_at.strftime("%Y-%m-%d %H:%M:%S"), "author": post.author.username})
 
 # ✅ Create a new post
 
@@ -75,7 +75,7 @@ def update_post(post_id):
     user_id = current_user["user_id"]
 
     # 작성자 검증
-    if post.user_id != user_id:
+    if post.user_id != int(user_id):
         return jsonify({"error": "You can only edit your own posts"}), 403
 
     data = request.get_json() 
@@ -95,8 +95,12 @@ def delete_post(post_id):
     current_user = json.loads(get_jwt_identity())
     user_id = current_user["user_id"]
     # 작성자 검증
-    if post.user_id != user_id:
+    if post.user_id != int(user_id):  # JWT에서 받은 user_id를 정수로 변환
         return jsonify({"error": "You can only delete your own posts"}), 403
+    
+    # 게시글과 관련된 댓글들을 먼저 삭제
+    Comment.query.filter_by(post_id=post_id).delete()
+    
     db.session.delete(post)
     db.session.commit()
     return jsonify({"message": "Post deleted!"})
@@ -139,6 +143,40 @@ def create_comment(post_id):
 
     return jsonify({"message": "Comment added!", "id": new_comment.id}), 201
 
+# Update a comment
+@bp.route("/board/comments/<int:comment_id>", methods=["PUT"])
+@jwt_required()
+def update_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    current_user = json.loads(get_jwt_identity())
+    user_id = current_user["user_id"]
+
+    # 작성자 검증
+    if comment.user_id != int(user_id):
+        return jsonify({"error": "You can only edit your own comments"}), 403
+
+    data = request.get_json()
+    
+    comment.content = data.get("content", comment.content)
+    db.session.commit()
+    return jsonify({"message": "Comment updated!"})
+
+# Delete a comment
+@bp.route("/board/comments/<int:comment_id>", methods=["DELETE"])
+@jwt_required()     
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    current_user = json.loads(get_jwt_identity())
+    user_id = current_user["user_id"]
+
+    # 작성자 검증
+    if comment.user_id != int(user_id):
+        return jsonify({"error": "You can only delete your own comments"}), 403
+    
+    # 댓글 삭제
+    db.session.delete(comment)
+    db.session.commit()
+    return jsonify({"message": "Comment deleted!"})
 
 # Register routes in Flask
 def register_routes(app):

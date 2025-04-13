@@ -14,6 +14,7 @@ class User(db.Model):
 
     posts = db.relationship("Post", backref="author", lazy=True)
     comments = db.relationship("Comment", backref="commentor", lazy=True)
+    groups = db.relationship("GroupMember", backref="user", lazy=True)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -46,8 +47,8 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id", ondelete="CASCADE"), nullable=False)
 
     def __repr__(self):
         return f"<Comment {self.content[:30]}>"
@@ -76,6 +77,9 @@ class Group(db.Model):
     is_public = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.Text)
+    
+    # 그룹과 멤버 간 관계 설정
+    members = db.relationship("GroupMember", backref="group", lazy=True)
 
     def __repr__(self):
         return f"<Group {self.group_name}>"
@@ -91,10 +95,12 @@ class GroupMember(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         "user.id", ondelete="CASCADE"), primary_key=True)
     status = db.Column(db.String)
-    role_id = db.Column(db.Integer, db.ForeignKey(
-        "roles.id", ondelete="CASCADE"), primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey("roles.id", ondelete="SET NULL"), nullable=True)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    
+    # 역할과의 관계 설정
+    role = db.relationship("Role", backref="group_members", lazy=True)
 
     def __repr__(self):
-        return f"<GroupMember group={self.group_id} user={self.user_id}>"
+        return f"<GroupMember group={self.group_id}, user={self.user_id}, role={self.role_id or 'No Role'}>"

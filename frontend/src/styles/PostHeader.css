@@ -1,27 +1,35 @@
-.post-wrapper {
-    width: 70vw;
-    margin-top: 1vw;
+#post-header {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.post-header-title-wrapper {
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .post-header-title {
-    text-align:left;
-    font-size: 2.5rem;
+  max-width: 100%;
+  word-wrap: break-word; /* This ensures long words will break and wrap */
+  overflow-wrap: break-word;
+}
+
+.post-header-info-wrapper {
+  padding-top: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #777;
 }
 
 .post-header-author {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 0.7vw;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
 }
-
-.post-header-date,
-.post-header-min-read {
-    display: inline;
-    margin: 0;
-    color: gray;
-}
-
-.post-header-min-read {
-    margin-left: 4px;
+.post-header-date {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
