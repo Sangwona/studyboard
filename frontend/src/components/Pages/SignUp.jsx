@@ -43,7 +43,7 @@ function SignUp() {
     // Get form data
     const formData = new FormData(event.target);
     const email = formData.get("email");
-    const userName = formData.get("username");s
+    const userName = formData.get("username");
     const password = formData.get("userPassword");
 
     const response = await fetch("/auth/signup", {
