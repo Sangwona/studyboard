@@ -22,6 +22,8 @@ def check_user():
     if not email and not username:
         return jsonify({"error": "No userID or username provided"}), 400
 
+    # *** IMPORTANT ***
+    # 추후에 User model에 email이 추가 되면 "user_id"를 "email"로 변경 예정!!!
     if email:
         existing_user_by_email = User.query.filter_by(user_id=email).first()
         if existing_user_by_email:
