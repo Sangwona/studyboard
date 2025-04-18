@@ -36,7 +36,7 @@ pip install -r requirements.txt
 **backend** 폴더로 이동하셔서 실행합니다.
 
 ```sh
-python app_and_run.py
+python build_and_run.py
 ```
 
 ### 5. 서버 접속
