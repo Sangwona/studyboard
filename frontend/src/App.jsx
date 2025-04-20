@@ -4,6 +4,11 @@ import WriteForm from "./components/Pages/WriteForm";
 import Home from "./components/Pages/Home";
 import Login from "./components/Pages/Login";
 import SignUp from "./components/Pages/SignUp";
+import Permissions from "./components/Pages/Permission";
+import GroupMng from "./components/Pages/GroupMng";
+import GroupList from "./components/Pages/GroupList";
+import GroupRequest from "./components/Pages/GroupRequest";
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBarFooter/NavBar";
 import Footer from "./components/NavBarFooter/Footer";
@@ -33,6 +38,10 @@ function App() {
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/writeform" element={<WriteForm />} />
+            {/* <Route path="/permission" element={<Permissions />} /> */}
+            <Route path="/groupmng" element={<GroupMng />} />
+            <Route path="/grouplist" element={<GroupList />} />
+            <Route path="/grouprequest" element={<GroupRequest />} />
           </Routes>
         </div>
         <Footer />
