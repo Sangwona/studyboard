@@ -26,6 +26,7 @@ body {
   text-align: center;
 }
 
+
 #login-form > input {
   width: 100%;
   height: 48px;
@@ -72,12 +73,48 @@ body {
   background-size: contain;
 }
 
+/* ID Duplication Check */
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 48px;
+    margin-bottom: 20px;
+}
+
+.input-group input {
+    flex: 1; /* Input takes remaining space */
+    height: 48px;
+    padding: 0 10px;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+}
+
+.input-group button {
+    height: 48px;
+    padding: 0 3px;
+    border-radius: 6px;
+    background-color: #9e9e9e;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.input-group button:hover {
+    background-color: #717171;
+    transform: translateY(0px);
+}
+
 .popup-content {
   width: 30vw;
 }
 
 .modal {
-  text-align: center;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .close-msg,
@@ -95,6 +132,11 @@ body {
 }
 
 .close-btn:hover {
-  background-color: #8b8b8b;
+    background-color: #8b8b8b;
 }
 
+.input-group button:disabled {
+    background-color: #28a745; /* Green for valid */
+    color: white;
+    cursor: default;
+}
