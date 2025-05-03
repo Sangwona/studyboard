@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBarFooter/NavBar";
 import Footer from "./components/NavBarFooter/Footer";
 import { useState, useEffect } from "react";
+import Groups from "./components/Pages/Groups";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("access_token"));
@@ -33,6 +34,7 @@ function App() {
             <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
             <Route path="/signup" element={<SignUp />}></Route>
             <Route path="/writeform" element={<WriteForm />} />
+            <Route path="/groups" element={<Groups />} />
           </Routes>
         </div>
         <Footer />

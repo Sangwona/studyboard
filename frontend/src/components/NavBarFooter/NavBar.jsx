@@ -32,6 +32,9 @@ function NavBar({ isLoggedIn, setIsLoggedIn }) {
           <li>
             <a href="#contact">Portfolio</a>
           </li>
+          <li>
+            <Link to="/groups">Groups</Link>
+          </li>
           {isLoggedIn ? (
             <>
               <li>
