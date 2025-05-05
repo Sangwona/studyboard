@@ -32,6 +32,7 @@ function NavBar({ isLoggedIn, setIsLoggedIn }) {
           <li>
             <a href="#contact">Portfolio</a>
           </li>
+
           {/* <li>
             <Link to="/permission">Permission</Link>
           </li> */}
@@ -39,7 +40,7 @@ function NavBar({ isLoggedIn, setIsLoggedIn }) {
             <Link to="/groupmng">Group Manage</Link>
           </li>
           <li>
-            <Link to="/grouplist">Group List</Link>
+            <Link to="/groups">Groups</Link>
           </li>
           <li>
             <Link to="/grouprequest">Group Request</Link>

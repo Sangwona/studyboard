@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./components/NavBarFooter/NavBar";
 import Footer from "./components/NavBarFooter/Footer";
 import { useState, useEffect } from "react";
+import Groups from "./components/Pages/Groups";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("access_token"));
@@ -40,7 +41,7 @@ function App() {
             <Route path="/writeform" element={<WriteForm />} />
             {/* <Route path="/permission" element={<Permissions />} /> */}
             <Route path="/groupmng" element={<GroupMng />} />
-            <Route path="/grouplist" element={<GroupList />} />
+            <Route path="/groups" element={<Groups />} />
             <Route path="/grouprequest" element={<GroupRequest />} />
           </Routes>
         </div>

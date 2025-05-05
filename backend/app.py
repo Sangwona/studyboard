@@ -6,6 +6,7 @@ from models import User, Post, Comment
 from dotenv import load_dotenv
 from routes import register_routes  # ✅ Don't import `bp` directly
 from auth_routes import auth_bp  # ✅ Authentication routes
+from group import group_bp
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
 import os
 
@@ -33,6 +34,9 @@ migrate = Migrate(app, db)  # Flask-Migrate 설정 추가
 # ✅ Register Routes
 register_routes(app)
 app.register_blueprint(auth_bp, url_prefix="/auth")  # Add auth routes
+
+# ✅ Register the Group Blueprint
+app.register_blueprint(group_bp)
 
 # ✅ React 정적 파일 서빙 (루트 경로에서 index.html 반환)
 
